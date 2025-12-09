@@ -14,7 +14,6 @@ namespace BankTask
         {
             InitializeComponent();
             _client = new Client();
-            // Заполняем данные по умолчанию
             _client.DATE_BEGIN = DateTime.Now;
             _client.CREATE_DATE = DateTime.Now;
             _client.IS_ACTIVE = true;
@@ -31,15 +30,11 @@ namespace BankTask
         {
             if (_client.ID == 0) return;
 
-            // Здесь мы не используем текстбоксы, а просто выводим данные в MessageBox
-            // В реальном проекте здесь будут присваиваться значения элементам формы
             MessageBox.Show($"Клиент ID: {_client.ID}\nСчет: {_client.CLIENT_ACC}\nАктивен: {_client.IS_ACTIVE}");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // В реальном проекте здесь будут браться значения из TextBox'ов
-            // Пока просто сохраняем данные, которые уже есть в _client
 
             if (_client.ID == 0)
                 _context.Clients.Add(_client);
@@ -55,6 +50,11 @@ namespace BankTask
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ClientForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

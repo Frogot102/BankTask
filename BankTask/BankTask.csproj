@@ -87,7 +87,9 @@
     <Reference Include="SkiaSharp, Version=3.119.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\SkiaSharp.3.119.1\lib\net462\SkiaSharp.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -156,9 +158,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202512082250121_InitialCreate.cs" />
-    <Compile Include="Migrations\202512082250121_InitialCreate.Designer.cs">
-      <DependentUpon>202512082250121_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202512090646481_test2.cs" />
+    <Compile Include="Migrations\202512090646481_test2.Designer.cs">
+      <DependentUpon>202512090646481_test2.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Request.cs" />
@@ -176,8 +178,8 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202512082250121_InitialCreate.resx">
-      <DependentUpon>202512082250121_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202512090646481_test2.resx">
+      <DependentUpon>202512090646481_test2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

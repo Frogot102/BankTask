@@ -19,7 +19,6 @@ namespace BankTask
 
         private void LoadData()
         {
-            // Для теста — выводим количество записей
             var clientCount = _context.Clients.Count();
             var requestCount = _context.Requests.Count();
 
@@ -28,40 +27,33 @@ namespace BankTask
 
         private void btnAddClient_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Добавление клиента (заглушка)", "Информация");
-            // new ClientForm().ShowDialog();
-            // LoadData();
+            new ClientForm().ShowDialog();
+            LoadData();
         }
 
         private void btnEditClient_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Редактирование клиента (заглушка)", "Информация");
-            // if (dgvClients.SelectedRows.Count > 0) ...
-        }
+            MessageBox.Show("Редактирование клиента (заглушка)", "Информация");        }
 
         private void btnDeleteClient_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Удаление клиента (заглушка)", "Информация");
-            // if (dgvClients.SelectedRows.Count > 0) ...
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Экспорт в Excel (заглушка)", "Информация");
-            // new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
+            new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
         }
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Импорт из Excel (заглушка)", "Информация");
-            // new ExcelService().ImportClientsFromExcel();
-            // LoadData();
+            new ExcelService().ImportClientsFromExcel();
+            LoadData();
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Печать PDF (заглушка)", "Информация");
-            // if (dgvClients.SelectedRows.Count > 0) ...
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -77,6 +69,11 @@ namespace BankTask
         {
             _context.Dispose();
             base.OnFormClosed(e);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

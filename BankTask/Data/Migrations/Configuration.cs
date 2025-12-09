@@ -1,4 +1,6 @@
-﻿using System.Data.Entity.Migrations;
+﻿using BankTask.Data.Migrations;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
+using System.Data.Entity.Migrations;
 
 namespace BankTask.Data.Migrations
 {
@@ -11,7 +13,7 @@ namespace BankTask.Data.Migrations
 
         protected override void Seed(BankTask.Data.ApplicationDbContext context)
         {
-            // Добавьте начальные данные, если нужно
+            
         }
     }
 }

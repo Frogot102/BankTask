@@ -8,7 +8,7 @@
         public override void Up()
         {
             CreateTable(
-                "AVERS_DWH_NSO_CLIENT",  
+                "AVERS_DWH_NSO_CLIENT",
                 c => new
                 {
                     ID = c.Int(nullable: false, identity: true),
@@ -32,7 +32,7 @@
                 .PrimaryKey(t => t.ID);
 
             CreateTable(
-                "AVERS_DWH_NSO_REQUESTS",  
+                "AVERS_DWH_NSO_REQUESTS",
                 c => new
                 {
                     ID = c.Int(nullable: false, identity: true),
@@ -58,7 +58,7 @@
                     NSO_CLIENT_ID = c.Int(nullable: false),
                 })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("AVERS_DWH_NSO_CLIENT", t => t.NSO_CLIENT_ID)  
+                .ForeignKey("AVERS_DWH_NSO_CLIENT", t => t.NSO_CLIENT_ID)
                 .Index(t => t.NSO_CLIENT_ID);
         }
 
