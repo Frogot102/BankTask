@@ -42,13 +42,13 @@ namespace BankTask
 
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
+            //new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
         }
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
             new ExcelService().ImportClientsFromExcel();
-            LoadData();
+            //LoadData();
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -60,15 +60,16 @@ namespace BankTask
         {
             Application.Exit();
         }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _context.Dispose();
+            ////_context.Dispose();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            _context.Dispose();
-            base.OnFormClosed(e);
+            //_context.Dispose();
+            ////base.OnFormClosed(e);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

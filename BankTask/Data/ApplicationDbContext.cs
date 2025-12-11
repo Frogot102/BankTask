@@ -7,8 +7,7 @@ namespace BankTask.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext()
-            : base(CreateConnection(), true)
+        public ApplicationDbContext() : base(CreateConnection(), true)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Migrations.Configuration>());
         }

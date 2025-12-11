@@ -7,7 +7,7 @@ namespace BankTask
 {
     public partial class ClientForm : Form
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        readonly ApplicationDbContext _context = new ApplicationDbContext();
         private Client _client;
 
         public ClientForm()
