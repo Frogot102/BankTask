@@ -158,10 +158,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202512090646481_test2.cs" />
-    <Compile Include="Migrations\202512090646481_test2.Designer.cs">
-      <DependentUpon>202512090646481_test2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Program.cs" />
@@ -177,9 +173,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202512090646481_test2.resx">
-      <DependentUpon>202512090646481_test2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

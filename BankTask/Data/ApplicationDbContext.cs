@@ -1,14 +1,22 @@
-﻿using System.Data.Entity;
+﻿using System.Data.Common;
+using System.Data.Entity;
 using BankTask.Models;
-using static System.Data.Entity.Migrations.Model.UpdateDatabaseOperation;
+using Npgsql;
 
 namespace BankTask.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base("ApplicationDbContext")
+        public ApplicationDbContext()
+            : base(CreateConnection(), true)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Migrations.Configuration>());
+        }
+
+        private static DbConnection CreateConnection()
+        {
+            var conn = new NpgsqlConnection("Host=localhost;Port=5432;Database=BankTaskDb;Username=postgres;Password=123");
+            return conn;
         }
 
         public DbSet<Client> Clients { get; set; }

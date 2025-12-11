@@ -1,0 +1,2871 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitattributes
+.gitignore
+BankTask.sln
+BankTask/App.config
+BankTask/BankTask.csproj
+BankTask/ClientFrom.cs
+BankTask/ClientFrom.Designer.cs
+BankTask/ClientFrom.resx
+BankTask/Data/ApplicationDbContext.cs
+BankTask/Data/Migrations/Configuration.cs
+BankTask/LoginForm.cs
+BankTask/LoginForm.Designer.cs
+BankTask/LoginForm.resx
+BankTask/MainForm.cs
+BankTask/MainForm.Designer.cs
+BankTask/MainForm.resx
+BankTask/Models/Client.cs
+BankTask/Models/Request.cs
+BankTask/packages.config
+BankTask/Program.cs
+BankTask/Properties/AssemblyInfo.cs
+BankTask/Properties/Resources.Designer.cs
+BankTask/Properties/Resources.resx
+BankTask/Properties/Settings.Designer.cs
+BankTask/Properties/Settings.settings
+BankTask/Services/AuthService.cs
+BankTask/Services/ExcelService.cs
+BankTask/Services/PdfService.cs
+package.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitattributes">
+###############################################################################
+# Set default behavior to automatically normalize line endings.
+###############################################################################
+* text=auto
+
+###############################################################################
+# Set default behavior for command prompt diff.
+#
+# This is need for earlier builds of msysgit that does not have it on by
+# default for csharp files.
+# Note: This is only used by command line
+###############################################################################
+#*.cs     diff=csharp
+
+###############################################################################
+# Set the merge driver for project and solution files
+#
+# Merging from the command prompt will add diff markers to the files if there
+# are conflicts (Merging from VS is not affected by the settings below, in VS
+# the diff markers are never inserted). Diff markers may cause the following 
+# file extensions to fail to load in VS. An alternative would be to treat
+# these files as binary and thus will always conflict and require user
+# intervention with every merge. To do so, just uncomment the entries below
+###############################################################################
+#*.sln       merge=binary
+#*.csproj    merge=binary
+#*.vbproj    merge=binary
+#*.vcxproj   merge=binary
+#*.vcproj    merge=binary
+#*.dbproj    merge=binary
+#*.fsproj    merge=binary
+#*.lsproj    merge=binary
+#*.wixproj   merge=binary
+#*.modelproj merge=binary
+#*.sqlproj   merge=binary
+#*.wwaproj   merge=binary
+
+###############################################################################
+# behavior for image files
+#
+# image files are treated as binary by default.
+###############################################################################
+#*.jpg   binary
+#*.png   binary
+#*.gif   binary
+
+###############################################################################
+# diff behavior for common document formats
+# 
+# Convert binary document formats to text before diffing them. This feature
+# is only available from the command line. Turn it on by uncommenting the 
+# entries below.
+###############################################################################
+#*.doc   diff=astextplain
+#*.DOC   diff=astextplain
+#*.docx  diff=astextplain
+#*.DOCX  diff=astextplain
+#*.dot   diff=astextplain
+#*.DOT   diff=astextplain
+#*.pdf   diff=astextplain
+#*.PDF   diff=astextplain
+#*.rtf   diff=astextplain
+#*.RTF   diff=astextplain
+</file>
+
+<file path=".gitignore">
+## Ignore Visual Studio temporary files, build results, and
+## files generated by popular Visual Studio add-ons.
+##
+## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Mono auto generated files
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+
+# Visual Studio 2017 auto generated files
+Generated\ Files/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio Trace Files
+*.e2e
+
+# TFS 2012 Local Workspace
+$tf/
+
+# Guidance Automation Toolkit
+*.gpState
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# TeamCity is a build add-in
+_TeamCity*
+
+# DotCover is a Code Coverage Tool
+*.dotCover
+
+# AxoCover is a Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
+
+# Coverlet is a free, cross platform Code Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workbench (sass)
+.sass-cache/
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject is a documentation generator add-in
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+# Click-Once directory
+publish/
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+# Note: Comment the next line if you want to checkin your web deploy settings,
+# but database connection strings (with potential passwords) will be unencrypted
+*.pubxml
+*.publishproj
+
+# Microsoft Azure Web App publish settings. Comment the next line if you want to
+# checkin your Azure Web App publish settings, but sensitive information contained
+# in these scripts will be unencrypted
+PublishScripts/
+
+# NuGet Packages
+*.nupkg
+# NuGet Symbol Packages
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+# Microsoft Azure Build Output
+csx/
+*.build.csdef
+
+# Microsoft Azure Emulator
+ecf/
+rcf/
+
+# Windows Store app package directories and files
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!?*.[Cc]ache/
+
+# Others
+ClientBin/
+~$*
+*~
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+
+# Including strong name files can present a security risk
+# (https://github.com/github/gitignore/pull/2483#issue-259490424)
+#*.snk
+
+# Since there are multiple workflows, uncomment next line to ignore bower_components
+# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
+#bower_components/
+
+# RIA/Silverlight projects
+Generated_Code/
+
+# Backup & report files from converting an old project file
+# to a newer Visual Studio version. Backup files are not needed,
+# because we have git ;-)
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Business Intelligence projects
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+*.rptproj.rsuser
+*- [Bb]ackup.rdl
+*- [Bb]ackup ([0-9]).rdl
+*- [Bb]ackup ([0-9][0-9]).rdl
+
+# Microsoft Fakes
+FakesAssemblies/
+
+# GhostDoc plugin setting file
+*.GhostDoc.xml
+
+# Node.js Tools for Visual Studio
+.ntvs_analysis.dat
+node_modules/
+
+# Visual Studio 6 build log
+*.plg
+
+# Visual Studio 6 workspace options file
+*.opt
+
+# Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
+*.vbw
+
+# Visual Studio LightSwitch build output
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+# FAKE - F# Make
+.fake/
+
+# CodeRush personal settings
+.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+# tools/**
+# !tools/packages.config
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Local History for Visual Studio
+.localhistory/
+
+# BeatPulse healthcheck temp database
+healthchecksdb
+
+# Backup folder for Package Reference Convert tool in Visual Studio 2017
+MigrationBackup/
+
+# Ionide (cross platform F# VS Code tools) working folder
+.ionide/
+
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
+</file>
+
+<file path="BankTask.sln">
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTask", "BankTask\BankTask.csproj", "{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3E8B35E-F228-4927-90A4-6AF8C4F295E9}
+	EndGlobalSection
+EndGlobal
+</file>
+
+<file path="BankTask/App.config">
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<configSections>
+		<!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+		<section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+	</configSections>
+
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+	</startup>
+
+	<runtime>
+		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+			<dependentAssembly>
+				<assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Buffers" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.3.0" newVersion="4.0.3.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.1.2" newVersion="4.0.1.2" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Numerics.Vectors" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.1.4.0" newVersion="4.1.4.0" />
+			</dependentAssembly>
+		</assemblyBinding>
+	</runtime>
+
+	<connectionStrings>
+		<add name="ApplicationDbContext"
+			 connectionString="Host=localhost;Port=5432;Database=BankTaskDb;Username=postgres;Password=123"
+			 providerName="Npgsql" />
+	</connectionStrings>
+
+	<entityFramework>
+		<defaultConnectionFactory type="Npgsql.NpgsqlFactory, Npgsql" />
+		<providers>
+			<provider invariantName="Npgsql" type="Npgsql.NpgsqlServices, Npgsql.EntityFramework" />
+		</providers>
+	</entityFramework>
+
+</configuration>
+</file>
+
+<file path="BankTask/BankTask.csproj">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF2E48CF-1DB8-437E-8AC7-A0974DC6CF73}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BankTask</RootNamespace>
+    <AssemblyName>BankTask</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="iTextSharp.LGPLv2.Core, Version=3.7.12.0, Culture=neutral, PublicKeyToken=51d712e21b66ad36, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.LGPLv2.Core.3.7.12\lib\net462\iTextSharp.LGPLv2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=8.0.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.8.0.3\lib\netstandard2.0\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
+      <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp, Version=3.119.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\SkiaSharp.3.119.1\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.8.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClientFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientFrom.Designer.cs">
+      <DependentUpon>ClientFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\ExcelService.cs" />
+    <Compile Include="Services\PdfService.cs" />
+    <EmbeddedResource Include="ClientFrom.resx">
+      <DependentUpon>ClientFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('..\packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <Import Project="..\packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
+  <Import Project="..\packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('..\packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
+</Project>
+</file>
+
+<file path="BankTask/ClientFrom.cs">
+using System;
+using System.Windows.Forms;
+using BankTask.Data;
+using BankTask.Models;
+
+namespace BankTask
+{
+    public partial class ClientForm : Form
+    {
+        private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private Client _client;
+
+        public ClientForm()
+        {
+            InitializeComponent();
+            _client = new Client();
+            _client.DATE_BEGIN = DateTime.Now;
+            _client.CREATE_DATE = DateTime.Now;
+            _client.IS_ACTIVE = true;
+        }
+
+        public ClientForm(Client client)
+        {
+            InitializeComponent();
+            _client = client ?? new Client();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            if (_client.ID == 0) return;
+
+            MessageBox.Show($"Клиент ID: {_client.ID}\nСчет: {_client.CLIENT_ACC}\nАктивен: {_client.IS_ACTIVE}");
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+            if (_client.ID == 0)
+                _context.Clients.Add(_client);
+            else
+                _context.Entry(_client).State = System.Data.Entity.EntityState.Modified;
+
+            _context.SaveChanges();
+            MessageBox.Show("Сохранено");
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void ClientForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+</file>
+
+<file path="BankTask/ClientFrom.Designer.cs">
+namespace BankTask
+{
+    partial class ClientForm
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.txtClientAcc = new System.Windows.Forms.TextBox();
+            this.dtpDateBegin = new System.Windows.Forms.DateTimePicker();
+            this.dtpDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.numIKUSNUM = new System.Windows.Forms.NumericUpDown();
+            this.txtAgreementNum = new System.Windows.Forms.TextBox();
+            this.dtpAgreementDate = new System.Windows.Forms.DateTimePicker();
+            this.txtAccN068 = new System.Windows.Forms.TextBox();
+            this.txtAcc47426 = new System.Windows.Forms.TextBox();
+            this.chkIsActive = new System.Windows.Forms.CheckBox();
+            this.txtCreateUser = new System.Windows.Forms.TextBox();
+            this.dtpCreateDate = new System.Windows.Forms.DateTimePicker();
+            this.txtUpdateUser = new System.Windows.Forms.TextBox();
+            this.dtpUpdateDate = new System.Windows.Forms.DateTimePicker();
+            this.txtNote = new System.Windows.Forms.TextBox();
+            this.txtErrorMessage = new System.Windows.Forms.TextBox();
+            this.txtClientAccDop = new System.Windows.Forms.TextBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numIKUSNUM)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // txtClientAcc
+            // 
+            this.txtClientAcc.Location = new System.Drawing.Point(200, 25);
+            this.txtClientAcc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientAcc.Name = "txtClientAcc";
+            this.txtClientAcc.Size = new System.Drawing.Size(265, 22);
+            this.txtClientAcc.TabIndex = 0;
+            // 
+            // dtpDateBegin
+            // 
+            this.dtpDateBegin.Location = new System.Drawing.Point(200, 55);
+            this.dtpDateBegin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateBegin.Name = "dtpDateBegin";
+            this.dtpDateBegin.Size = new System.Drawing.Size(265, 22);
+            this.dtpDateBegin.TabIndex = 1;
+            // 
+            // dtpDateEnd
+            // 
+            this.dtpDateEnd.Location = new System.Drawing.Point(200, 86);
+            this.dtpDateEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateEnd.Name = "dtpDateEnd";
+            this.dtpDateEnd.Size = new System.Drawing.Size(265, 22);
+            this.dtpDateEnd.TabIndex = 2;
+            // 
+            // numIKUSNUM
+            // 
+            this.numIKUSNUM.Location = new System.Drawing.Point(200, 117);
+            this.numIKUSNUM.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numIKUSNUM.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.numIKUSNUM.Name = "numIKUSNUM";
+            this.numIKUSNUM.Size = new System.Drawing.Size(267, 22);
+            this.numIKUSNUM.TabIndex = 3;
+            // 
+            // txtAgreementNum
+            // 
+            this.txtAgreementNum.Location = new System.Drawing.Point(200, 148);
+            this.txtAgreementNum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAgreementNum.Name = "txtAgreementNum";
+            this.txtAgreementNum.Size = new System.Drawing.Size(265, 22);
+            this.txtAgreementNum.TabIndex = 4;
+            // 
+            // dtpAgreementDate
+            // 
+            this.dtpAgreementDate.Location = new System.Drawing.Point(200, 178);
+            this.dtpAgreementDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpAgreementDate.Name = "dtpAgreementDate";
+            this.dtpAgreementDate.Size = new System.Drawing.Size(265, 22);
+            this.dtpAgreementDate.TabIndex = 5;
+            // 
+            // txtAccN068
+            // 
+            this.txtAccN068.Location = new System.Drawing.Point(200, 209);
+            this.txtAccN068.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAccN068.Name = "txtAccN068";
+            this.txtAccN068.Size = new System.Drawing.Size(265, 22);
+            this.txtAccN068.TabIndex = 6;
+            // 
+            // txtAcc47426
+            // 
+            this.txtAcc47426.Location = new System.Drawing.Point(200, 240);
+            this.txtAcc47426.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAcc47426.Name = "txtAcc47426";
+            this.txtAcc47426.Size = new System.Drawing.Size(265, 22);
+            this.txtAcc47426.TabIndex = 7;
+            // 
+            // chkIsActive
+            // 
+            this.chkIsActive.AutoSize = true;
+            this.chkIsActive.Location = new System.Drawing.Point(200, 271);
+            this.chkIsActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkIsActive.Name = "chkIsActive";
+            this.chkIsActive.Size = new System.Drawing.Size(84, 20);
+            this.chkIsActive.TabIndex = 8;
+            this.chkIsActive.Text = "Активен";
+            this.chkIsActive.UseVisualStyleBackColor = true;
+            // 
+            // txtCreateUser
+            // 
+            this.txtCreateUser.Location = new System.Drawing.Point(200, 302);
+            this.txtCreateUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCreateUser.Name = "txtCreateUser";
+            this.txtCreateUser.Size = new System.Drawing.Size(265, 22);
+            this.txtCreateUser.TabIndex = 9;
+            // 
+            // dtpCreateDate
+            // 
+            this.dtpCreateDate.Location = new System.Drawing.Point(200, 332);
+            this.dtpCreateDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpCreateDate.Name = "dtpCreateDate";
+            this.dtpCreateDate.Size = new System.Drawing.Size(265, 22);
+            this.dtpCreateDate.TabIndex = 10;
+            // 
+            // txtUpdateUser
+            // 
+            this.txtUpdateUser.Location = new System.Drawing.Point(200, 363);
+            this.txtUpdateUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUpdateUser.Name = "txtUpdateUser";
+            this.txtUpdateUser.Size = new System.Drawing.Size(265, 22);
+            this.txtUpdateUser.TabIndex = 11;
+            // 
+            // dtpUpdateDate
+            // 
+            this.dtpUpdateDate.Location = new System.Drawing.Point(200, 394);
+            this.dtpUpdateDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpUpdateDate.Name = "dtpUpdateDate";
+            this.dtpUpdateDate.Size = new System.Drawing.Size(265, 22);
+            this.dtpUpdateDate.TabIndex = 12;
+            // 
+            // txtNote
+            // 
+            this.txtNote.Location = new System.Drawing.Point(200, 425);
+            this.txtNote.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNote.Name = "txtNote";
+            this.txtNote.Size = new System.Drawing.Size(265, 22);
+            this.txtNote.TabIndex = 13;
+            // 
+            // txtErrorMessage
+            // 
+            this.txtErrorMessage.Location = new System.Drawing.Point(200, 455);
+            this.txtErrorMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtErrorMessage.Name = "txtErrorMessage";
+            this.txtErrorMessage.Size = new System.Drawing.Size(265, 22);
+            this.txtErrorMessage.TabIndex = 14;
+            // 
+            // txtClientAccDop
+            // 
+            this.txtClientAccDop.Location = new System.Drawing.Point(200, 486);
+            this.txtClientAccDop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientAccDop.Name = "txtClientAccDop";
+            this.txtClientAccDop.Size = new System.Drawing.Size(265, 22);
+            this.txtClientAccDop.TabIndex = 15;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(200, 517);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 28);
+            this.btnSave.TabIndex = 16;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(307, 517);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 17;
+            this.btnCancel.Text = "Отмена";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 16);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "CLIENT_ACC:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(27, 59);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 16);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "DATE_BEGIN:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(27, 90);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "DATE_END:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(27, 121);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 16);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "IKUSNUM:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(27, 151);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(135, 16);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "AGGREMENT_NUM:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(27, 182);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(141, 16);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "AGGREMENT_DATE:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 213);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 16);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "ACC_N068:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(27, 244);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 16);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "ACC_47426:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(27, 272);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 16);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "IS_ACTIVE:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(27, 305);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(110, 16);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "CREATE_USER:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(27, 336);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(109, 16);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "CREATE_DATE:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(27, 367);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(111, 16);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "UPDATE_USER:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(27, 398);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(110, 16);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "UPDATE_DATE:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(27, 428);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 16);
+            this.label14.TabIndex = 31;
+            this.label14.Text = "NOTE:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(27, 459);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(112, 16);
+            this.label15.TabIndex = 32;
+            this.label15.Text = "ERR_MESSAGE:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(27, 490);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(127, 16);
+            this.label16.TabIndex = 33;
+            this.label16.Text = "CLIENT_ACC_DOP:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label17.Location = new System.Drawing.Point(20, 6);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(269, 25);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Редактирование клиента";
+            // 
+            // ClientForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(533, 566);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtClientAccDop);
+            this.Controls.Add(this.txtErrorMessage);
+            this.Controls.Add(this.txtNote);
+            this.Controls.Add(this.dtpUpdateDate);
+            this.Controls.Add(this.txtUpdateUser);
+            this.Controls.Add(this.dtpCreateDate);
+            this.Controls.Add(this.txtCreateUser);
+            this.Controls.Add(this.chkIsActive);
+            this.Controls.Add(this.txtAcc47426);
+            this.Controls.Add(this.txtAccN068);
+            this.Controls.Add(this.dtpAgreementDate);
+            this.Controls.Add(this.txtAgreementNum);
+            this.Controls.Add(this.numIKUSNUM);
+            this.Controls.Add(this.dtpDateEnd);
+            this.Controls.Add(this.dtpDateBegin);
+            this.Controls.Add(this.txtClientAcc);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "ClientForm";
+            this.Text = "Редактирование клиента";
+            this.Load += new System.EventHandler(this.ClientForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numIKUSNUM)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        private System.Windows.Forms.TextBox txtClientAcc;
+        private System.Windows.Forms.DateTimePicker dtpDateBegin;
+        private System.Windows.Forms.DateTimePicker dtpDateEnd;
+        private System.Windows.Forms.NumericUpDown numIKUSNUM;
+        private System.Windows.Forms.TextBox txtAgreementNum;
+        private System.Windows.Forms.DateTimePicker dtpAgreementDate;
+        private System.Windows.Forms.TextBox txtAccN068;
+        private System.Windows.Forms.TextBox txtAcc47426;
+        private System.Windows.Forms.CheckBox chkIsActive;
+        private System.Windows.Forms.TextBox txtCreateUser;
+        private System.Windows.Forms.DateTimePicker dtpCreateDate;
+        private System.Windows.Forms.TextBox txtUpdateUser;
+        private System.Windows.Forms.DateTimePicker dtpUpdateDate;
+        private System.Windows.Forms.TextBox txtNote;
+        private System.Windows.Forms.TextBox txtErrorMessage;
+        private System.Windows.Forms.TextBox txtClientAccDop;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+    }
+}
+</file>
+
+<file path="BankTask/ClientFrom.resx">
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>
+</file>
+
+<file path="BankTask/Data/ApplicationDbContext.cs">
+using System.Data.Common;
+using System.Data.Entity;
+using BankTask.Models;
+using Npgsql;
+
+namespace BankTask.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext()
+            : base(CreateConnection(), true)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Migrations.Configuration>());
+        }
+
+        private static DbConnection CreateConnection()
+        {
+            var conn = new NpgsqlConnection("Host=localhost;Port=5432;Database=BankTaskDb;Username=postgres;Password=123");
+            return conn;
+        }
+
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Request> Requests { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Client>().ToTable("AVERS_DWH_NSO_CLIENT");
+            modelBuilder.Entity<Request>().ToTable("AVERS_DWH_NSO_REQUESTS");
+
+            modelBuilder.Entity<Request>()
+                .HasRequired(r => r.Client)
+                .WithMany()
+                .HasForeignKey(r => r.NSO_CLIENT_ID);
+        }
+    }
+}
+</file>
+
+<file path="BankTask/Data/Migrations/Configuration.cs">
+using BankTask.Data.Migrations;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
+using System.Data.Entity.Migrations;
+
+namespace BankTask.Data.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<BankTask.Data.ApplicationDbContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(BankTask.Data.ApplicationDbContext context)
+        {
+            
+        }
+    }
+}
+</file>
+
+<file path="BankTask/LoginForm.cs">
+using System;
+using System.Windows.Forms;
+
+namespace BankTask
+{
+    public partial class LoginForm : Form
+    {
+        public LoginForm()
+        {
+            InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            if (Services.AuthService.Login(txtUsername.Text, txtPassword.Text))
+            {
+                new MainForm().Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+</file>
+
+<file path="BankTask/LoginForm.Designer.cs">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BankTask
+{
+    partial class LoginForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private TextBox txtUsername;
+        private TextBox txtPassword;
+        private Button btnLogin;
+        private Button btnCancel;
+        private Label label1;
+        private Label label2;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null)) components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(30, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Логин:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(30, 70);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Пароль:";
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Location = new System.Drawing.Point(100, 27);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(150, 22);
+            this.txtUsername.TabIndex = 0;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(100, 67);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(150, 22);
+            this.txtPassword.TabIndex = 1;
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Location = new System.Drawing.Point(100, 110);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnLogin.TabIndex = 2;
+            this.btnLogin.Text = "Вход";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(175, 110);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Отмена";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // LoginForm
+            // 
+            this.ClientSize = new System.Drawing.Size(280, 150);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Name = "LoginForm";
+            this.Text = "Авторизация";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+    }
+}
+</file>
+
+<file path="BankTask/LoginForm.resx">
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>
+</file>
+
+<file path="BankTask/MainForm.cs">
+using System;
+using System.Linq;
+using System.Windows.Forms;
+using BankTask.Data;
+using BankTask.Models;
+using BankTask.Services;
+
+namespace BankTask
+{
+    public partial class MainForm : Form
+    {
+        private readonly ApplicationDbContext _context = new ApplicationDbContext();
+
+        public MainForm()
+        {
+            InitializeComponent();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            var clientCount = _context.Clients.Count();
+            var requestCount = _context.Requests.Count();
+
+            MessageBox.Show($"Клиентов: {clientCount}\nЗаявок: {requestCount}", "Данные загружены");
+        }
+
+        private void btnAddClient_Click(object sender, EventArgs e)
+        {
+            new ClientForm().ShowDialog();
+            LoadData();
+        }
+
+        private void btnEditClient_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Редактирование клиента (заглушка)", "Информация");        }
+
+        private void btnDeleteClient_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Удаление клиента (заглушка)", "Информация");
+        }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
+        }
+
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            new ExcelService().ImportClientsFromExcel();
+            LoadData();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Печать PDF (заглушка)", "Информация");
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _context.Dispose();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _context.Dispose();
+            base.OnFormClosed(e);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+</file>
+
+<file path="BankTask/MainForm.Designer.cs">
+namespace BankTask
+{
+    partial class MainForm
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.btnExportExcel = new System.Windows.Forms.Button();
+            this.btnImportExcel = new System.Windows.Forms.Button();
+            this.btnDeleteClient = new System.Windows.Forms.Button();
+            this.btnEditClient = new System.Windows.Forms.Button();
+            this.btnAddClient = new System.Windows.Forms.Button();
+            this.dgvClients = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dgvRequests = new System.Windows.Forms.DataGridView();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(16, 15);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1067, 492);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.btnPrint);
+            this.tabPage1.Controls.Add(this.btnExportExcel);
+            this.tabPage1.Controls.Add(this.btnImportExcel);
+            this.tabPage1.Controls.Add(this.btnDeleteClient);
+            this.tabPage1.Controls.Add(this.btnEditClient);
+            this.tabPage1.Controls.Add(this.btnAddClient);
+            this.tabPage1.Controls.Add(this.dgvClients);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1059, 463);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Клиенты";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(800, 418);
+            this.btnPrint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(100, 28);
+            this.btnPrint.TabIndex = 6;
+            this.btnPrint.Text = "Печать";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Location = new System.Drawing.Point(693, 418);
+            this.btnExportExcel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(100, 28);
+            this.btnExportExcel.TabIndex = 5;
+            this.btnExportExcel.Text = "Экспорт";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
+            // 
+            // btnImportExcel
+            // 
+            this.btnImportExcel.Location = new System.Drawing.Point(587, 418);
+            this.btnImportExcel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnImportExcel.Name = "btnImportExcel";
+            this.btnImportExcel.Size = new System.Drawing.Size(100, 28);
+            this.btnImportExcel.TabIndex = 4;
+            this.btnImportExcel.Text = "Импорт";
+            this.btnImportExcel.UseVisualStyleBackColor = true;
+            this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
+            // 
+            // btnDeleteClient
+            // 
+            this.btnDeleteClient.Location = new System.Drawing.Point(480, 418);
+            this.btnDeleteClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteClient.Name = "btnDeleteClient";
+            this.btnDeleteClient.Size = new System.Drawing.Size(100, 28);
+            this.btnDeleteClient.TabIndex = 3;
+            this.btnDeleteClient.Text = "Удалить";
+            this.btnDeleteClient.UseVisualStyleBackColor = true;
+            this.btnDeleteClient.Click += new System.EventHandler(this.btnDeleteClient_Click);
+            // 
+            // btnEditClient
+            // 
+            this.btnEditClient.Location = new System.Drawing.Point(373, 418);
+            this.btnEditClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditClient.Name = "btnEditClient";
+            this.btnEditClient.Size = new System.Drawing.Size(100, 28);
+            this.btnEditClient.TabIndex = 2;
+            this.btnEditClient.Text = "Редакт";
+            this.btnEditClient.UseVisualStyleBackColor = true;
+            this.btnEditClient.Click += new System.EventHandler(this.btnEditClient_Click);
+            // 
+            // btnAddClient
+            // 
+            this.btnAddClient.Location = new System.Drawing.Point(267, 418);
+            this.btnAddClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddClient.Name = "btnAddClient";
+            this.btnAddClient.Size = new System.Drawing.Size(100, 28);
+            this.btnAddClient.TabIndex = 1;
+            this.btnAddClient.Text = "Добавить";
+            this.btnAddClient.UseVisualStyleBackColor = true;
+            this.btnAddClient.Click += new System.EventHandler(this.btnAddClient_Click);
+            // 
+            // dgvClients
+            // 
+            this.dgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvClients.Location = new System.Drawing.Point(8, 7);
+            this.dgvClients.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvClients.Name = "dgvClients";
+            this.dgvClients.RowHeadersWidth = 51;
+            this.dgvClients.Size = new System.Drawing.Size(1040, 394);
+            this.dgvClients.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dgvRequests);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1059, 463);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Заявки";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dgvRequests
+            // 
+            this.dgvRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRequests.Location = new System.Drawing.Point(8, 7);
+            this.dgvRequests.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvRequests.Name = "dgvRequests";
+            this.dgvRequests.RowHeadersWidth = 51;
+            this.dgvRequests.Size = new System.Drawing.Size(1040, 443);
+            this.dgvRequests.TabIndex = 0;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(983, 514);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(100, 28);
+            this.btnExit.TabIndex = 1;
+            this.btnExit.Text = "Выход";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1099, 558);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "MainForm";
+            this.Text = "Банковская система - Клиенты и заявки";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        private System.Windows.Forms.DataGridView dgvClients;
+        private System.Windows.Forms.DataGridView dgvRequests;
+        private System.Windows.Forms.Button btnAddClient;
+        private System.Windows.Forms.Button btnEditClient;
+        private System.Windows.Forms.Button btnDeleteClient;
+        private System.Windows.Forms.Button btnImportExcel;
+        private System.Windows.Forms.Button btnExportExcel;
+        private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+    }
+}
+</file>
+
+<file path="BankTask/MainForm.resx">
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>
+</file>
+
+<file path="BankTask/Models/Client.cs">
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BankTask.Models
+{
+    [Table("AVERS_DWH_NSO_CLIENT")]
+    public class Client
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Required]
+        [StringLength(25)]
+        public string CLIENT_ACC { get; set; }
+
+        public DateTime DATE_BEGIN { get; set; }
+        public DateTime? DATE_END { get; set; }
+
+        public int IKUSNUM { get; set; }
+
+        [StringLength(50)]
+        public string AGGREMENT_NUM { get; set; }
+
+        public DateTime? AGGREMENT_DATE { get; set; }
+
+        [StringLength(25)]
+        public string ACC_N068 { get; set; }
+
+        [StringLength(25)]
+        public string ACC_47426 { get; set; }
+
+        public bool IS_ACTIVE { get; set; } = true;
+
+        [StringLength(250)]
+        public string CREATE_USER { get; set; }
+
+        public DateTime CREATE_DATE { get; set; }
+
+        [StringLength(250)]
+        public string UPDATE_USER { get; set; }
+
+        public DateTime? UPDATE_DATE { get; set; }
+
+        [StringLength(250)]
+        public string NOTE { get; set; }
+
+        [StringLength(1000)]
+        public string ERR_MESSAGE { get; set; }
+
+        [StringLength(25)]
+        public string CLIENT_ACC_DOP { get; set; }
+    }
+}
+</file>
+
+<file path="BankTask/Models/Request.cs">
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BankTask.Models
+{
+    [Table("AVERS_DWH_NSO_REQUESTS")]
+    public class Request
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string CLIENT_ACC { get; set; }
+
+        public DateTime CREATE_DATE { get; set; }
+
+        [StringLength(20)]
+        public string SUMM { get; set; }
+
+        [StringLength(20)]
+        public string ADDAGGREMENT_NUM { get; set; }
+
+        [StringLength(250)]
+        public string PRC_STR { get; set; }
+
+        public DateTime DATE_BEGIN { get; set; }
+        public DateTime? DATE_END { get; set; }
+
+        [StringLength(10)]
+        public string DAYS_COUNT { get; set; }
+
+        public int? PRC_JS_CALC { get; set; } = 0;
+        public int? PRC_NUM { get; set; } = 0;
+
+        public DateTime? DATE_BREAK { get; set; }
+
+        public int? IS_ENDED { get; set; } = 0;
+
+        public DateTime? ADDAGGREMENT_DATE { get; set; }
+
+        public int IKUSNUM { get; set; }
+
+        [StringLength(250)]
+        public string CREATE_USER { get; set; }
+
+        [StringLength(250)]
+        public string UPDATE_USER { get; set; }
+
+        public DateTime? UPDATE_DATE { get; set; }
+
+        [StringLength(250)]
+        public string NOTE { get; set; }
+
+        [StringLength(1000)]
+        public string ERR_MESSAGE { get; set; }
+
+        public int NSO_CLIENT_ID { get; set; }
+
+        [ForeignKey("NSO_CLIENT_ID")]
+        public virtual Client Client { get; set; }
+    }
+}
+</file>
+
+<file path="BankTask/packages.config">
+<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="BouncyCastle.Cryptography" version="2.6.2" targetFramework="net472" />
+  <package id="ClosedXML" version="0.105.0" targetFramework="net472" />
+  <package id="ClosedXML.Parser" version="2.0.0" targetFramework="net472" />
+  <package id="DocumentFormat.OpenXml" version="3.1.1" targetFramework="net472" />
+  <package id="DocumentFormat.OpenXml.Framework" version="3.1.1" targetFramework="net472" />
+  <package id="EntityFramework" version="6.5.1" targetFramework="net472" />
+  <package id="ExcelNumberFormat" version="1.1.0" targetFramework="net472" />
+  <package id="iTextSharp.LGPLv2.Core" version="3.7.12" targetFramework="net472" />
+  <package id="Microsoft.Bcl.AsyncInterfaces" version="8.0.0" targetFramework="net472" />
+  <package id="Microsoft.Bcl.HashCode" version="1.1.1" targetFramework="net472" />
+  <package id="Microsoft.Extensions.DependencyInjection.Abstractions" version="8.0.0" targetFramework="net472" />
+  <package id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" targetFramework="net472" />
+  <package id="Npgsql" version="8.0.3" targetFramework="net472" />
+  <package id="RBush.Signed" version="4.0.0" targetFramework="net472" />
+  <package id="SixLabors.Fonts" version="1.0.0" targetFramework="net472" />
+  <package id="SkiaSharp" version="3.119.1" targetFramework="net472" />
+  <package id="SkiaSharp.NativeAssets.macOS" version="3.119.1" targetFramework="net472" />
+  <package id="SkiaSharp.NativeAssets.Win32" version="3.119.1" targetFramework="net472" />
+  <package id="System.Buffers" version="4.5.1" targetFramework="net472" />
+  <package id="System.Collections.Immutable" version="8.0.0" targetFramework="net472" />
+  <package id="System.Diagnostics.DiagnosticSource" version="8.0.0" targetFramework="net472" />
+  <package id="System.Memory" version="4.5.5" targetFramework="net472" />
+  <package id="System.Numerics.Vectors" version="4.5.0" targetFramework="net472" />
+  <package id="System.Runtime.CompilerServices.Unsafe" version="6.0.0" targetFramework="net472" />
+  <package id="System.Text.Encodings.Web" version="8.0.0" targetFramework="net472" />
+  <package id="System.Text.Json" version="8.0.0" targetFramework="net472" />
+  <package id="System.Threading.Channels" version="8.0.0" targetFramework="net472" />
+  <package id="System.Threading.Tasks.Extensions" version="4.5.4" targetFramework="net472" />
+  <package id="System.ValueTuple" version="4.5.0" targetFramework="net472" />
+</packages>
+</file>
+
+<file path="BankTask/Program.cs">
+using System;
+using System.Windows.Forms;
+
+namespace BankTask
+{
+    internal static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new LoginForm());
+        }
+    }
+}
+</file>
+
+<file path="BankTask/Properties/AssemblyInfo.cs">
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+// Общие сведения об этой сборке предоставляются следующим набором
+// набора атрибутов. Измените значения этих атрибутов для изменения сведений,
+// связанных со сборкой.
+[assembly: AssemblyTitle("BankTask")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("BankTask")]
+[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
+// Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
+// для компонентов COM. Если необходимо обратиться к типу в этой сборке через
+// COM, следует установить атрибут ComVisible в TRUE для этого типа.
+[assembly: ComVisible(false)]
+
+// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
+[assembly: Guid("df2e48cf-1db8-437e-8ac7-a0974dc6cf73")]
+
+// Сведения о версии сборки состоят из указанных ниже четырех значений:
+//
+//      Основной номер версии
+//      Дополнительный номер версии
+//      Номер сборки
+//      Редакция
+//
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+</file>
+
+<file path="BankTask/Properties/Resources.Designer.cs">
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     Этот код создан программным средством.
+//     Версия среды выполнения: 4.0.30319.42000
+//
+//     Изменения в этом файле могут привести к неправильному поведению и будут утрачены, если
+//     код создан повторно.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+namespace BankTask.Properties
+{
+
+
+    /// <summary>
+    ///   Класс ресурсов со строгим типом для поиска локализованных строк и пр.
+    /// </summary>
+    // Этот класс был автоматически создан при помощи StronglyTypedResourceBuilder
+    // класс с помощью таких средств, как ResGen или Visual Studio.
+    // Для добавления или удаления члена измените файл .ResX, а затем перезапустите ResGen
+    // с параметром /str или заново постройте свой VS-проект.
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    internal class Resources
+    {
+
+        private static global::System.Resources.ResourceManager resourceMan;
+
+        private static global::System.Globalization.CultureInfo resourceCulture;
+
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources()
+        {
+        }
+
+        /// <summary>
+        ///   Возврат кэшированного экземпляра ResourceManager, используемого этим классом.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if ((resourceMan == null))
+                {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BankTask.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+
+        /// <summary>
+        ///   Переопределяет свойство CurrentUICulture текущего потока для всех
+        ///   подстановки ресурсов с помощью этого класса ресурсов со строгим типом.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
+                return resourceCulture;
+            }
+            set
+            {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+</file>
+
+<file path="BankTask/Properties/Resources.resx">
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>
+</file>
+
+<file path="BankTask/Properties/Settings.Designer.cs">
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//     Runtime Version:4.0.30319.42000
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+namespace BankTask.Properties
+{
+
+
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
+        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+
+        public static Settings Default
+        {
+            get
+            {
+                return defaultInstance;
+            }
+        }
+    }
+}
+</file>
+
+<file path="BankTask/Properties/Settings.settings">
+<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>
+</file>
+
+<file path="BankTask/Services/AuthService.cs">
+using System.Collections.Generic;
+
+namespace BankTask.Services
+{
+    public static class AuthService
+    {
+        private static readonly Dictionary<string, string> Users = new Dictionary<string, string>
+        {
+            { "admin", "adminpass" },
+            { "user", "userpass" }
+        };
+
+        private static string _currentUser;
+        private static string _currentRole;
+
+        public static bool Login(string username, string password)
+        {
+            if (Users.TryGetValue(username, out string pass) && pass == password)
+            {
+                _currentUser = username;
+                _currentRole = username == "admin" ? "Admin" : "User";
+                return true;
+            }
+            return false;
+        }
+
+        public static string CurrentUser => _currentUser;
+        public static string CurrentRole => _currentRole;
+        public static bool IsAdmin => _currentRole == "Admin";
+        public static bool IsLoggedIn => !string.IsNullOrEmpty(_currentUser);
+    }
+}
+</file>
+
+<file path="BankTask/Services/ExcelService.cs">
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using BankTask.Models;
+using ClosedXML.Excel;
+
+namespace BankTask.Services
+{
+    public class ExcelService
+    {
+        public void ExportClientsToExcel(List<Client> clients)
+        {
+            using (var wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add("Клиенты");
+
+                // Заголовки
+                ws.Cell(1, 1).Value = "ID";
+                ws.Cell(1, 2).Value = "CLIENT_ACC";
+                ws.Cell(1, 3).Value = "DATE_BEGIN";
+                ws.Cell(1, 4).Value = "DATE_END";
+                ws.Cell(1, 5).Value = "IKUSNUM";
+                ws.Cell(1, 6).Value = "AGGREMENT_NUM";
+                ws.Cell(1, 7).Value = "AGGREMENT_DATE";
+                ws.Cell(1, 8).Value = "ACC_N068";
+                ws.Cell(1, 9).Value = "ACC_47426";
+                ws.Cell(1, 10).Value = "IS_ACTIVE";
+                ws.Cell(1, 11).Value = "CREATE_USER";
+                ws.Cell(1, 12).Value = "CREATE_DATE";
+                ws.Cell(1, 13).Value = "UPDATE_USER";
+                ws.Cell(1, 14).Value = "UPDATE_DATE";
+                ws.Cell(1, 15).Value = "NOTE";
+                ws.Cell(1, 16).Value = "ERR_MESSAGE";
+                ws.Cell(1, 17).Value = "CLIENT_ACC_DOP";
+
+                // Данные
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    var c = clients[i];
+                    ws.Cell(i + 2, 1).Value = c.ID;
+                    ws.Cell(i + 2, 2).Value = c.CLIENT_ACC;
+                    ws.Cell(i + 2, 3).Value = c.DATE_BEGIN;
+                    ws.Cell(i + 2, 4).Value = c.DATE_END ?? default(DateTime);
+                    ws.Cell(i + 2, 5).Value = c.IKUSNUM;
+                    ws.Cell(i + 2, 6).Value = c.AGGREMENT_NUM;
+                    ws.Cell(i + 2, 7).Value = c.AGGREMENT_DATE ?? default(DateTime);
+                    ws.Cell(i + 2, 8).Value = c.ACC_N068;
+                    ws.Cell(i + 2, 9).Value = c.ACC_47426;
+                    ws.Cell(i + 2, 10).Value = c.IS_ACTIVE;
+                    ws.Cell(i + 2, 11).Value = c.CREATE_USER;
+                    ws.Cell(i + 2, 12).Value = c.CREATE_DATE;
+                    ws.Cell(i + 2, 13).Value = c.UPDATE_USER;
+                    ws.Cell(i + 2, 14).Value = c.UPDATE_DATE ?? default(DateTime);
+                    ws.Cell(i + 2, 15).Value = c.NOTE;
+                    ws.Cell(i + 2, 16).Value = c.ERR_MESSAGE;
+                    ws.Cell(i + 2, 17).Value = c.CLIENT_ACC_DOP;
+                }
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    Title = "Сохранить как Excel"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                }
+            }
+        }
+
+        public void ImportClientsFromExcel()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xlsx",
+                Title = "Выберите Excel файл"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (var wb = new XLWorkbook(openFileDialog.FileName))
+                {
+                    var ws = wb.Worksheet(1);
+                    var rows = ws.RowsUsed().Skip(1); // Пропускаем заголовок
+
+                    foreach (var row in rows)
+                    {
+                        var client = new Client
+                        {
+                            CLIENT_ACC = row.Cell(2).GetValue<string>(),
+                            DATE_BEGIN = row.Cell(3).GetValue<DateTime>(),
+                            DATE_END = row.Cell(4).IsEmpty() ? (DateTime?)null : row.Cell(4).GetValue<DateTime>(), 
+                            IKUSNUM = row.Cell(5).GetValue<int>(),
+                            AGGREMENT_NUM = row.Cell(6).GetValue<string>(),
+                            AGGREMENT_DATE = row.Cell(7).IsEmpty() ? (DateTime?)null : row.Cell(7).GetValue<DateTime>(),
+                            ACC_N068 = row.Cell(8).GetValue<string>(),
+                            ACC_47426 = row.Cell(9).GetValue<string>(),
+                            IS_ACTIVE = row.Cell(10).GetValue<bool>(),
+                            CREATE_USER = row.Cell(11).GetValue<string>(),
+                            CREATE_DATE = row.Cell(12).GetValue<DateTime>(),
+                            UPDATE_USER = row.Cell(13).GetValue<string>(),
+                            UPDATE_DATE = row.Cell(14).IsEmpty() ? (DateTime?)null : row.Cell(14).GetValue<DateTime>(),
+                            NOTE = row.Cell(15).GetValue<string>(),
+                            ERR_MESSAGE = row.Cell(16).GetValue<string>(),
+                            CLIENT_ACC_DOP = row.Cell(17).GetValue<string>()
+                        };
+
+
+                    }
+
+
+
+                }
+            }
+        }
+    }
+}
+</file>
+
+<file path="BankTask/Services/PdfService.cs">
+using System;
+using System.IO;
+using BankTask.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
+namespace BankTask.Services
+{
+    public class PdfService
+    {
+        public void GeneratePdfForClient(Client client)
+        {
+            var doc = new Document();
+            var fileName = Path.Combine(Path.GetTempPath(), $"Client_{client.ID}.pdf");
+
+            using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                PdfWriter.GetInstance(doc, fs);
+                doc.Open();
+
+                doc.Add(new Paragraph("Карточка клиента", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16)));
+                doc.Add(new Paragraph($"ID: {client.ID}"));
+                doc.Add(new Paragraph($"Счет: {client.CLIENT_ACC}"));
+                doc.Add(new Paragraph($"Начало: {client.DATE_BEGIN:dd.MM.yyyy}"));
+                if (client.DATE_END.HasValue) doc.Add(new Paragraph($"Окончание: {client.DATE_END.Value:dd.MM.yyyy}"));
+                doc.Add(new Paragraph($"IKUSNUM: {client.IKUSNUM}"));
+                if (!string.IsNullOrEmpty(client.AGGREMENT_NUM))
+                    doc.Add(new Paragraph($"Соглашение: {client.AGGREMENT_NUM} от {client.AGGREMENT_DATE?.ToString("dd.MM.yyyy") ?? "—"}"));
+
+                doc.Close();
+            }
+
+            System.Diagnostics.Process.Start(fileName);
+        }
+    }
+}
+</file>
+
+<file path="package.json">
+{
+  "dependencies": {
+    "repomix": "^1.9.2"
+  }
+}
+</file>
+
+</files>
