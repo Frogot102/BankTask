@@ -13,7 +13,7 @@ namespace BankTask.Data.Migrations
 
         protected override void Seed(BankTask.Data.ApplicationDbContext context)
         {
-            
+
         }
     }
 }

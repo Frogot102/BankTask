@@ -25,6 +25,9 @@
             this.btnAddClient = new System.Windows.Forms.Button();
             this.dgvClients = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnDeleteRequest = new System.Windows.Forms.Button();
+            this.btnEditRequest = new System.Windows.Forms.Button();
+            this.btnAddRequest = new System.Windows.Forms.Button();
             this.dgvRequests = new System.Windows.Forms.DataGridView();
             this.btnExit = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -141,6 +144,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnDeleteRequest);
+            this.tabPage2.Controls.Add(this.btnEditRequest);
+            this.tabPage2.Controls.Add(this.btnAddRequest);
             this.tabPage2.Controls.Add(this.dgvRequests);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -151,6 +157,39 @@
             this.tabPage2.Text = "Заявки";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnDeleteRequest
+            // 
+            this.btnDeleteRequest.Location = new System.Drawing.Point(480, 418);
+            this.btnDeleteRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteRequest.Name = "btnDeleteRequest";
+            this.btnDeleteRequest.Size = new System.Drawing.Size(100, 28);
+            this.btnDeleteRequest.TabIndex = 3;
+            this.btnDeleteRequest.Text = "Удалить";
+            this.btnDeleteRequest.UseVisualStyleBackColor = true;
+            this.btnDeleteRequest.Click += new System.EventHandler(this.btnDeleteRequest_Click);
+            // 
+            // btnEditRequest
+            // 
+            this.btnEditRequest.Location = new System.Drawing.Point(373, 418);
+            this.btnEditRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditRequest.Name = "btnEditRequest";
+            this.btnEditRequest.Size = new System.Drawing.Size(100, 28);
+            this.btnEditRequest.TabIndex = 2;
+            this.btnEditRequest.Text = "Редакт";
+            this.btnEditRequest.UseVisualStyleBackColor = true;
+            this.btnEditRequest.Click += new System.EventHandler(this.btnEditRequest_Click);
+            // 
+            // btnAddRequest
+            // 
+            this.btnAddRequest.Location = new System.Drawing.Point(267, 418);
+            this.btnAddRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddRequest.Name = "btnAddRequest";
+            this.btnAddRequest.Size = new System.Drawing.Size(100, 28);
+            this.btnAddRequest.TabIndex = 1;
+            this.btnAddRequest.Text = "Добавить";
+            this.btnAddRequest.UseVisualStyleBackColor = true;
+            this.btnAddRequest.Click += new System.EventHandler(this.btnAddRequest_Click);
+            // 
             // dgvRequests
             // 
             this.dgvRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -158,7 +197,7 @@
             this.dgvRequests.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvRequests.Name = "dgvRequests";
             this.dgvRequests.RowHeadersWidth = 51;
-            this.dgvRequests.Size = new System.Drawing.Size(1040, 443);
+            this.dgvRequests.Size = new System.Drawing.Size(1040, 394);
             this.dgvRequests.TabIndex = 0;
             // 
             // btnExit
@@ -190,9 +229,11 @@
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).EndInit();
             this.ResumeLayout(false);
-
         }
 
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvClients;
         private System.Windows.Forms.DataGridView dgvRequests;
         private System.Windows.Forms.Button btnAddClient;
@@ -202,8 +243,8 @@
         private System.Windows.Forms.Button btnExportExcel;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button btnAddRequest;
+        private System.Windows.Forms.Button btnEditRequest;
+        private System.Windows.Forms.Button btnDeleteRequest;
     }
 }
