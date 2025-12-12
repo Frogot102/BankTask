@@ -30,7 +30,8 @@ namespace BankTask
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-
+            txtUsername.Text = "admin";
+            txtPassword.Text = "adminpass";
         }
     }
 }

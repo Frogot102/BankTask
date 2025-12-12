@@ -21,8 +21,7 @@ namespace BankTask.Data
                ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"", ""CLIENT_ACC_DOP""
         FROM ""AVERS_DWH_NSO_CLIENT""", conn);
             using var reader = cmd.ExecuteReader();
-
-            // Получаем индексы столбцов один раз, чтобы не вызывать GetOrdinal на каждой итерации
+  
             int idIndex = reader.GetOrdinal("ID");
             int clientAccIndex = reader.GetOrdinal("CLIENT_ACC");
             int dateBeginIndex = reader.GetOrdinal("DATE_BEGIN");
@@ -126,7 +125,6 @@ namespace BankTask.Data
             ""CLIENT_ACC_DOP"" = @CLIENT_ACC_DOP
         WHERE ""ID"" = @ID", conn);
 
-            // Явно добавляем параметры с указанием типа
             cmd.Parameters.Add("@ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = client.ID;
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC;
             cmd.Parameters.Add("@DATE_BEGIN", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_BEGIN;
