@@ -57,6 +57,7 @@ BankTask/LoginForm.resx
 BankTask/MainForm.cs
 BankTask/MainForm.Designer.cs
 BankTask/MainForm.resx
+BankTask/MainForm.ru.resx
 BankTask/Models/Client.cs
 BankTask/Models/Request.cs
 BankTask/packages.config
@@ -544,6 +545,11 @@ EndGlobal
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
   </configSections>
+	<system.data>
+		<DbProviderFactories>
+			<add name="Npgsql Data Provider" invariant="Npgsql" description=".Net Data Provider for PostgreSQL" type="Npgsql.NpgsqlFactory, Npgsql" />
+		</DbProviderFactories>
+	</system.data>
   <startup>
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
   </startup>
@@ -774,6 +780,9 @@ EndGlobal
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ru.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -800,6 +809,9 @@ EndGlobal
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="image\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -821,12 +833,12 @@ using System;
 using System.Windows.Forms;
 using BankTask.Data;
 using BankTask.Models;
+using BankTask.Services;
 
 namespace BankTask
 {
     public partial class ClientForm : Form
     {
-        readonly ApplicationDbContext _context = new ApplicationDbContext();
         private Client _client;
 
         public ClientForm()
@@ -842,14 +854,12 @@ namespace BankTask
         {
             InitializeComponent();
             _client = client ?? new Client();
-            LoadData(); // Загружаем данные в форму
+            LoadData();
         }
 
         private void LoadData()
         {
             if (_client.ID == 0) return;
-
-            // Заполняем поля формы данными из объекта _client
             txtClientAcc.Text = _client.CLIENT_ACC;
             dtpDateBegin.Value = _client.DATE_BEGIN;
             dtpDateEnd.Value = _client.DATE_END ?? DateTime.Now;
@@ -866,45 +876,39 @@ namespace BankTask
             txtNote.Text = _client.NOTE;
             txtErrorMessage.Text = _client.ERR_MESSAGE;
             txtClientAccDop.Text = _client.CLIENT_ACC_DOP;
-
-            MessageBox.Show($"Клиент ID: {_client.ID}\nСчет: {_client.CLIENT_ACC}\nАктивен: {_client.IS_ACTIVE}");
         }
 
         private void SaveData()
         {
-            // Сохраняем данные из формы в объект _client
             _client.CLIENT_ACC = txtClientAcc.Text.Trim();
             _client.DATE_BEGIN = dtpDateBegin.Value;
-            _client.DATE_END = dtpDateEnd.Value == DateTime.MinValue ? (DateTime?)null : dtpDateEnd.Value; // Если дата не выбрана, ставим null
+            _client.DATE_END = dtpDateEnd.Value == DateTime.MinValue ? (DateTime?)null : dtpDateEnd.Value;
             _client.IKUSNUM = (int)numIKUSNUM.Value;
             _client.AGGREMENT_NUM = string.IsNullOrWhiteSpace(txtAgreementNum.Text) ? null : txtAgreementNum.Text.Trim();
             _client.AGGREMENT_DATE = dtpAgreementDate.Value == DateTime.MinValue ? (DateTime?)null : dtpAgreementDate.Value;
             _client.ACC_N068 = string.IsNullOrWhiteSpace(txtAccN068.Text) ? null : txtAccN068.Text.Trim();
             _client.ACC_47426 = string.IsNullOrWhiteSpace(txtAcc47426.Text) ? null : txtAcc47426.Text.Trim();
             _client.IS_ACTIVE = chkIsActive.Checked;
-            _client.CREATE_USER = txtCreateUser.Text.Trim();
-            _client.CREATE_DATE = dtpCreateDate.Value;
-            _client.UPDATE_USER = string.IsNullOrWhiteSpace(txtUpdateUser.Text) ? null : txtUpdateUser.Text.Trim();
-            _client.UPDATE_DATE = dtpUpdateDate.Value == DateTime.MinValue ? (DateTime?)null : dtpUpdateDate.Value;
             _client.NOTE = string.IsNullOrWhiteSpace(txtNote.Text) ? null : txtNote.Text.Trim();
             _client.ERR_MESSAGE = string.IsNullOrWhiteSpace(txtErrorMessage.Text) ? null : txtErrorMessage.Text.Trim();
             _client.CLIENT_ACC_DOP = string.IsNullOrWhiteSpace(txtClientAccDop.Text) ? null : txtClientAccDop.Text.Trim();
+
+            string currentUser = AuthService.CurrentUser;
+            if (_client.ID == 0)
+            {
+                _client.CREATE_USER = currentUser;
+                _client.CREATE_DATE = DateTime.Now;
+            }
+            _client.UPDATE_USER = currentUser;
+            _client.UPDATE_DATE = DateTime.Now;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Перед сохранением копируем данные из формы в объект
             SaveData();
-
-            // Проверка обязательных полей
             if (string.IsNullOrWhiteSpace(_client.CLIENT_ACC))
             {
                 MessageBox.Show("Поле 'CLIENT_ACC' обязательно для заполнения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(_client.CREATE_USER))
-            {
-                MessageBox.Show("Поле 'CREATE_USER' обязательно для заполнения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -948,7 +952,7 @@ namespace BankTask
 
         private void InitializeComponent()
         {
-            this.txtClientAcc = new System.Windows.Forms.TextBox();
+            this.txtClientAcc = new System.Windows.Forms.MaskedTextBox();
             this.dtpDateBegin = new System.Windows.Forms.DateTimePicker();
             this.dtpDateEnd = new System.Windows.Forms.DateTimePicker();
             this.numIKUSNUM = new System.Windows.Forms.NumericUpDown();
@@ -988,32 +992,35 @@ namespace BankTask
             // 
             // txtClientAcc
             // 
-            this.txtClientAcc.Location = new System.Drawing.Point(200, 25);
-            this.txtClientAcc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientAcc.Location = new System.Drawing.Point(201, 43);
+            this.txtClientAcc.Margin = new System.Windows.Forms.Padding(4);
+            this.txtClientAcc.Mask = "00000 000 0 0000 0000000";
             this.txtClientAcc.Name = "txtClientAcc";
             this.txtClientAcc.Size = new System.Drawing.Size(265, 22);
             this.txtClientAcc.TabIndex = 0;
             // 
             // dtpDateBegin
             // 
-            this.dtpDateBegin.Location = new System.Drawing.Point(200, 55);
-            this.dtpDateBegin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateBegin.Enabled = false;
+            this.dtpDateBegin.Location = new System.Drawing.Point(201, 73);
+            this.dtpDateBegin.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDateBegin.Name = "dtpDateBegin";
             this.dtpDateBegin.Size = new System.Drawing.Size(265, 22);
             this.dtpDateBegin.TabIndex = 1;
             // 
             // dtpDateEnd
             // 
-            this.dtpDateEnd.Location = new System.Drawing.Point(200, 86);
-            this.dtpDateEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateEnd.Enabled = false;
+            this.dtpDateEnd.Location = new System.Drawing.Point(201, 104);
+            this.dtpDateEnd.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDateEnd.Name = "dtpDateEnd";
             this.dtpDateEnd.Size = new System.Drawing.Size(265, 22);
             this.dtpDateEnd.TabIndex = 2;
             // 
             // numIKUSNUM
             // 
-            this.numIKUSNUM.Location = new System.Drawing.Point(200, 117);
-            this.numIKUSNUM.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numIKUSNUM.Location = new System.Drawing.Point(201, 472);
+            this.numIKUSNUM.Margin = new System.Windows.Forms.Padding(4);
             this.numIKUSNUM.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -1022,35 +1029,36 @@ namespace BankTask
             this.numIKUSNUM.Name = "numIKUSNUM";
             this.numIKUSNUM.Size = new System.Drawing.Size(267, 22);
             this.numIKUSNUM.TabIndex = 3;
+            this.numIKUSNUM.Visible = false;
             // 
             // txtAgreementNum
             // 
-            this.txtAgreementNum.Location = new System.Drawing.Point(200, 148);
-            this.txtAgreementNum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAgreementNum.Location = new System.Drawing.Point(201, 134);
+            this.txtAgreementNum.Margin = new System.Windows.Forms.Padding(4);
             this.txtAgreementNum.Name = "txtAgreementNum";
             this.txtAgreementNum.Size = new System.Drawing.Size(265, 22);
             this.txtAgreementNum.TabIndex = 4;
             // 
             // dtpAgreementDate
             // 
-            this.dtpAgreementDate.Location = new System.Drawing.Point(200, 178);
-            this.dtpAgreementDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpAgreementDate.Location = new System.Drawing.Point(201, 164);
+            this.dtpAgreementDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpAgreementDate.Name = "dtpAgreementDate";
             this.dtpAgreementDate.Size = new System.Drawing.Size(265, 22);
             this.dtpAgreementDate.TabIndex = 5;
             // 
             // txtAccN068
             // 
-            this.txtAccN068.Location = new System.Drawing.Point(200, 209);
-            this.txtAccN068.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAccN068.Location = new System.Drawing.Point(201, 195);
+            this.txtAccN068.Margin = new System.Windows.Forms.Padding(4);
             this.txtAccN068.Name = "txtAccN068";
             this.txtAccN068.Size = new System.Drawing.Size(265, 22);
             this.txtAccN068.TabIndex = 6;
             // 
             // txtAcc47426
             // 
-            this.txtAcc47426.Location = new System.Drawing.Point(200, 240);
-            this.txtAcc47426.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAcc47426.Location = new System.Drawing.Point(201, 226);
+            this.txtAcc47426.Margin = new System.Windows.Forms.Padding(4);
             this.txtAcc47426.Name = "txtAcc47426";
             this.txtAcc47426.Size = new System.Drawing.Size(265, 22);
             this.txtAcc47426.TabIndex = 7;
@@ -1058,74 +1066,87 @@ namespace BankTask
             // chkIsActive
             // 
             this.chkIsActive.AutoSize = true;
-            this.chkIsActive.Location = new System.Drawing.Point(200, 271);
-            this.chkIsActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkIsActive.Checked = true;
+            this.chkIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsActive.Enabled = false;
+            this.chkIsActive.Location = new System.Drawing.Point(201, 502);
+            this.chkIsActive.Margin = new System.Windows.Forms.Padding(4);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Size = new System.Drawing.Size(84, 20);
             this.chkIsActive.TabIndex = 8;
             this.chkIsActive.Text = "Активен";
             this.chkIsActive.UseVisualStyleBackColor = true;
+            this.chkIsActive.Visible = false;
             // 
             // txtCreateUser
             // 
-            this.txtCreateUser.Location = new System.Drawing.Point(200, 302);
-            this.txtCreateUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCreateUser.Enabled = false;
+            this.txtCreateUser.Location = new System.Drawing.Point(201, 258);
+            this.txtCreateUser.Margin = new System.Windows.Forms.Padding(4);
             this.txtCreateUser.Name = "txtCreateUser";
             this.txtCreateUser.Size = new System.Drawing.Size(265, 22);
             this.txtCreateUser.TabIndex = 9;
+            this.txtCreateUser.Text = "admin";
             // 
             // dtpCreateDate
             // 
-            this.dtpCreateDate.Location = new System.Drawing.Point(200, 332);
-            this.dtpCreateDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpCreateDate.Enabled = false;
+            this.dtpCreateDate.Location = new System.Drawing.Point(201, 288);
+            this.dtpCreateDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpCreateDate.Name = "dtpCreateDate";
             this.dtpCreateDate.Size = new System.Drawing.Size(265, 22);
             this.dtpCreateDate.TabIndex = 10;
             // 
             // txtUpdateUser
             // 
-            this.txtUpdateUser.Location = new System.Drawing.Point(200, 363);
-            this.txtUpdateUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUpdateUser.Enabled = false;
+            this.txtUpdateUser.Location = new System.Drawing.Point(201, 319);
+            this.txtUpdateUser.Margin = new System.Windows.Forms.Padding(4);
             this.txtUpdateUser.Name = "txtUpdateUser";
             this.txtUpdateUser.Size = new System.Drawing.Size(265, 22);
             this.txtUpdateUser.TabIndex = 11;
+            this.txtUpdateUser.Text = "admin";
             // 
             // dtpUpdateDate
             // 
-            this.dtpUpdateDate.Location = new System.Drawing.Point(200, 394);
-            this.dtpUpdateDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpUpdateDate.Enabled = false;
+            this.dtpUpdateDate.Location = new System.Drawing.Point(201, 350);
+            this.dtpUpdateDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpUpdateDate.Name = "dtpUpdateDate";
             this.dtpUpdateDate.Size = new System.Drawing.Size(265, 22);
             this.dtpUpdateDate.TabIndex = 12;
             // 
             // txtNote
             // 
-            this.txtNote.Location = new System.Drawing.Point(200, 425);
-            this.txtNote.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNote.Location = new System.Drawing.Point(201, 411);
+            this.txtNote.Margin = new System.Windows.Forms.Padding(4);
             this.txtNote.Name = "txtNote";
             this.txtNote.Size = new System.Drawing.Size(265, 22);
-            this.txtNote.TabIndex = 13;
+            this.txtNote.TabIndex = 14;
+            this.txtNote.Visible = false;
             // 
             // txtErrorMessage
             // 
-            this.txtErrorMessage.Location = new System.Drawing.Point(200, 455);
-            this.txtErrorMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtErrorMessage.Location = new System.Drawing.Point(201, 442);
+            this.txtErrorMessage.Margin = new System.Windows.Forms.Padding(4);
             this.txtErrorMessage.Name = "txtErrorMessage";
             this.txtErrorMessage.Size = new System.Drawing.Size(265, 22);
-            this.txtErrorMessage.TabIndex = 14;
+            this.txtErrorMessage.TabIndex = 15;
+            this.txtErrorMessage.Visible = false;
             // 
             // txtClientAccDop
             // 
-            this.txtClientAccDop.Location = new System.Drawing.Point(200, 486);
-            this.txtClientAccDop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtClientAccDop.Location = new System.Drawing.Point(201, 382);
+            this.txtClientAccDop.Margin = new System.Windows.Forms.Padding(4);
             this.txtClientAccDop.Name = "txtClientAccDop";
             this.txtClientAccDop.Size = new System.Drawing.Size(265, 22);
-            this.txtClientAccDop.TabIndex = 15;
+            this.txtClientAccDop.TabIndex = 13;
+            this.txtClientAccDop.Visible = false;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(200, 517);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Location = new System.Drawing.Point(313, 543);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 28);
             this.btnSave.TabIndex = 16;
@@ -1135,8 +1156,8 @@ namespace BankTask
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(307, 517);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(420, 543);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 17;
@@ -1147,168 +1168,173 @@ namespace BankTask
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 28);
+            this.label1.Location = new System.Drawing.Point(28, 46);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 16);
+            this.label1.Size = new System.Drawing.Size(94, 16);
             this.label1.TabIndex = 18;
-            this.label1.Text = "CLIENT_ACC:";
+            this.label1.Text = "Номер счета:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 59);
+            this.label2.Location = new System.Drawing.Point(28, 77);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 16);
+            this.label2.Size = new System.Drawing.Size(93, 16);
             this.label2.TabIndex = 19;
-            this.label2.Text = "DATE_BEGIN:";
+            this.label2.Text = "Дата начала:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 90);
+            this.label3.Location = new System.Drawing.Point(28, 108);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 16);
+            this.label3.Size = new System.Drawing.Size(84, 16);
             this.label3.TabIndex = 20;
-            this.label3.Text = "DATE_END:";
+            this.label3.Text = "Дата конца:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 121);
+            this.label4.Location = new System.Drawing.Point(28, 476);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 16);
             this.label4.TabIndex = 21;
             this.label4.Text = "IKUSNUM:";
+            this.label4.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 151);
+            this.label5.Location = new System.Drawing.Point(28, 137);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(135, 16);
+            this.label5.Size = new System.Drawing.Size(136, 16);
             this.label5.TabIndex = 22;
-            this.label5.Text = "AGGREMENT_NUM:";
+            this.label5.Text = "Номер разрешения:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(27, 182);
+            this.label6.Location = new System.Drawing.Point(28, 168);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 16);
+            this.label6.Size = new System.Drawing.Size(125, 16);
             this.label6.TabIndex = 23;
-            this.label6.Text = "AGGREMENT_DATE:";
+            this.label6.Text = "Дата разрешения:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 213);
+            this.label7.Location = new System.Drawing.Point(28, 199);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 16);
+            this.label7.Size = new System.Drawing.Size(76, 16);
             this.label7.TabIndex = 24;
-            this.label7.Text = "ACC_N068:";
+            this.label7.Text = "Счет N068:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 244);
+            this.label8.Location = new System.Drawing.Point(28, 230);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(79, 16);
+            this.label8.Size = new System.Drawing.Size(80, 16);
             this.label8.TabIndex = 25;
-            this.label8.Text = "ACC_47426:";
+            this.label8.Text = "Счет 47426:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(27, 272);
+            this.label9.Location = new System.Drawing.Point(28, 503);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(77, 16);
             this.label9.TabIndex = 26;
             this.label9.Text = "IS_ACTIVE:";
+            this.label9.Visible = false;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(27, 305);
+            this.label10.Location = new System.Drawing.Point(28, 261);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(110, 16);
+            this.label10.Size = new System.Drawing.Size(138, 16);
             this.label10.TabIndex = 27;
-            this.label10.Text = "CREATE_USER:";
+            this.label10.Text = "Создатель клиента:";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(27, 336);
+            this.label11.Location = new System.Drawing.Point(28, 292);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(109, 16);
+            this.label11.Size = new System.Drawing.Size(164, 16);
             this.label11.TabIndex = 28;
-            this.label11.Text = "CREATE_DATE:";
+            this.label11.Text = "Дата создания клиента:";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(27, 367);
+            this.label12.Location = new System.Drawing.Point(28, 323);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(111, 16);
+            this.label12.Size = new System.Drawing.Size(124, 16);
             this.label12.TabIndex = 29;
-            this.label12.Text = "UPDATE_USER:";
+            this.label12.Text = "Клиента обновил:";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(27, 398);
+            this.label13.Location = new System.Drawing.Point(28, 354);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(110, 16);
+            this.label13.Size = new System.Drawing.Size(124, 16);
             this.label13.TabIndex = 30;
-            this.label13.Text = "UPDATE_DATE:";
+            this.label13.Text = "Дата обновления:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(27, 428);
+            this.label14.Location = new System.Drawing.Point(28, 384);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 16);
             this.label14.TabIndex = 31;
             this.label14.Text = "NOTE:";
+            this.label14.Visible = false;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(27, 459);
+            this.label15.Location = new System.Drawing.Point(28, 415);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(112, 16);
             this.label15.TabIndex = 32;
             this.label15.Text = "ERR_MESSAGE:";
+            this.label15.Visible = false;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(27, 490);
+            this.label16.Location = new System.Drawing.Point(28, 446);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(127, 16);
             this.label16.TabIndex = 33;
             this.label16.Text = "CLIENT_ACC_DOP:";
+            this.label16.Visible = false;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(20, 6);
+            this.label17.Location = new System.Drawing.Point(117, 9);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(269, 25);
@@ -1319,7 +1345,7 @@ namespace BankTask
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 566);
+            this.ClientSize = new System.Drawing.Size(533, 590);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
@@ -1355,7 +1381,7 @@ namespace BankTask
             this.Controls.Add(this.txtClientAcc);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ClientForm";
             this.Text = "Редактирование клиента";
             this.Load += new System.EventHandler(this.ClientForm_Load);
@@ -1365,7 +1391,7 @@ namespace BankTask
 
         }
 
-        private System.Windows.Forms.TextBox txtClientAcc;
+        private System.Windows.Forms.MaskedTextBox txtClientAcc;
         private System.Windows.Forms.DateTimePicker dtpDateBegin;
         private System.Windows.Forms.DateTimePicker dtpDateEnd;
         private System.Windows.Forms.NumericUpDown numIKUSNUM;
@@ -1570,20 +1596,49 @@ namespace BankTask.Data
     {
         private const string ConnectionString = "Host=localhost;Port=5432;Database=BankTaskDb;Username=postgres;Password=123";
 
-        public static List<Client> GetClients()
+        // =============== КЛИЕНТЫ ===============
+
+        public static List<Client> GetClients() => GetClientsInternal(null, null, null);
+        public static List<Client> GetClientsByUser(string username) => GetClientsInternal(username, null, null);
+        public static List<Client> GetClientsByDate(DateTime? dateFrom, DateTime? dateTo) => GetClientsInternal(null, dateFrom, dateTo);
+        public static List<Client> GetClientsByUserAndDate(string username, DateTime? dateFrom, DateTime? dateTo) => GetClientsInternal(username, dateFrom, dateTo);
+
+        private static List<Client> GetClientsInternal(string username = null, DateTime? dateFrom = null, DateTime? dateTo = null)
         {
             var clients = new List<Client>();
             using var conn = new NpgsqlConnection(ConnectionString);
             conn.Open();
-            using var cmd = new NpgsqlCommand(@"
-        SELECT ""ID"", ""CLIENT_ACC"", ""DATE_BEGIN"", ""DATE_END"", ""IKUSNUM"",
-               ""AGGREMENT_NUM"", ""AGGREMENT_DATE"", ""ACC_N068"", ""ACC_47426"",
-               ""IS_ACTIVE"", ""CREATE_USER"", ""CREATE_DATE"", ""UPDATE_USER"",
-               ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"", ""CLIENT_ACC_DOP""
-        FROM ""AVERS_DWH_NSO_CLIENT""", conn);
-            using var reader = cmd.ExecuteReader();
+            var sql = @"
+                SELECT ""ID"", ""CLIENT_ACC"", ""DATE_BEGIN"", ""DATE_END"", ""IKUSNUM"",
+                       ""AGGREMENT_NUM"", ""AGGREMENT_DATE"", ""ACC_N068"", ""ACC_47426"",
+                       ""IS_ACTIVE"", ""CREATE_USER"", ""CREATE_DATE"", ""UPDATE_USER"",
+                       ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"", ""CLIENT_ACC_DOP""
+                FROM ""AVERS_DWH_NSO_CLIENT""
+                WHERE 1=1";
 
-            // Получаем индексы столбцов один раз, чтобы не вызывать GetOrdinal на каждой итерации
+            if (!string.IsNullOrEmpty(username))
+                sql += " AND \"CREATE_USER\" = @Username";
+            if (dateFrom.HasValue)
+                sql += " AND \"CREATE_DATE\" >= @DateFrom";
+            if (dateTo.HasValue)
+                sql += " AND \"CREATE_DATE\" <= @DateTo";
+
+            using var cmd = new NpgsqlCommand(sql, conn);
+            if (!string.IsNullOrEmpty(username))
+                cmd.Parameters.AddWithValue("Username", username);
+            if (dateFrom.HasValue)
+                cmd.Parameters.AddWithValue("DateFrom", dateFrom.Value.Date);
+            if (dateTo.HasValue)
+                // Включаем весь день: до 23:59:59.9999999
+                cmd.Parameters.AddWithValue("DateTo", dateTo.Value.Date.AddDays(1).AddTicks(-1));
+
+            using var reader = cmd.ExecuteReader();
+            ReadClients(reader, clients);
+            return clients;
+        }
+
+        private static void ReadClients(NpgsqlDataReader reader, List<Client> clients)
+        {
             int idIndex = reader.GetOrdinal("ID");
             int clientAccIndex = reader.GetOrdinal("CLIENT_ACC");
             int dateBeginIndex = reader.GetOrdinal("DATE_BEGIN");
@@ -1601,7 +1656,6 @@ namespace BankTask.Data
             int noteIndex = reader.GetOrdinal("NOTE");
             int errMessageIndex = reader.GetOrdinal("ERR_MESSAGE");
             int clientAccDopIndex = reader.GetOrdinal("CLIENT_ACC_DOP");
-
             while (reader.Read())
             {
                 clients.Add(new Client
@@ -1625,11 +1679,8 @@ namespace BankTask.Data
                     CLIENT_ACC_DOP = reader.IsDBNull(clientAccDopIndex) ? null : reader.GetString(clientAccDopIndex)
                 });
             }
-            return clients;
         }
 
-        // Добавить клиента
-        // Добавить клиента
         public static void AddClient(Client client)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -1643,8 +1694,6 @@ namespace BankTask.Data
                 @AGGREMENT_DATE, @ACC_N068, @ACC_47426, @IS_ACTIVE, @CREATE_USER,
                 @CREATE_DATE, @UPDATE_USER, @UPDATE_DATE, @NOTE, @ERR_MESSAGE, @CLIENT_ACC_DOP)",
                 conn);
-
-            // Явно добавляем параметры с указанием типа
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC;
             cmd.Parameters.Add("@DATE_BEGIN", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_BEGIN;
             cmd.Parameters.Add("@DATE_END", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_END ?? (object)DBNull.Value;
@@ -1661,11 +1710,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@CLIENT_ACC_DOP", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC_DOP ?? (object)DBNull.Value;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Обновить клиента
         public static void UpdateClient(Client client)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -1689,8 +1736,6 @@ namespace BankTask.Data
             ""ERR_MESSAGE"" = @ERR_MESSAGE,
             ""CLIENT_ACC_DOP"" = @CLIENT_ACC_DOP
         WHERE ""ID"" = @ID", conn);
-
-            // Явно добавляем параметры с указанием типа
             cmd.Parameters.Add("@ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = client.ID;
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC;
             cmd.Parameters.Add("@DATE_BEGIN", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_BEGIN;
@@ -1708,10 +1753,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@CLIENT_ACC_DOP", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC_DOP ?? (object)DBNull.Value;
-
             cmd.ExecuteNonQuery();
         }
-        // Удалить клиента
+
         public static void DeleteClient(int id)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -1720,23 +1764,50 @@ namespace BankTask.Data
             cmd.Parameters.AddWithValue("ID", id);
             cmd.ExecuteNonQuery();
         }
-        // Получить все заявки
-        // Получить все заявки
-        public static List<Request> GetRequests()
+
+        // =============== ЗАЯВКИ ===============
+
+        public static List<Request> GetRequests() => GetRequestsInternal(null, null, null);
+        public static List<Request> GetRequestsByUser(string username) => GetRequestsInternal(username, null, null);
+        public static List<Request> GetRequestsByDate(DateTime? dateFrom, DateTime? dateTo) => GetRequestsInternal(null, dateFrom, dateTo);
+        public static List<Request> GetRequestsByUserAndDate(string username, DateTime? dateFrom, DateTime? dateTo) => GetRequestsInternal(username, dateFrom, dateTo);
+
+        private static List<Request> GetRequestsInternal(string username = null, DateTime? dateFrom = null, DateTime? dateTo = null)
         {
             var requests = new List<Request>();
             using var conn = new NpgsqlConnection(ConnectionString);
             conn.Open();
-            using var cmd = new NpgsqlCommand(@"
-        SELECT ""ID"", ""CLIENT_ACC"", ""CREATE_DATE"", ""SUMM"", ""ADDAGGREMENT_NUM"",
-               ""PRC_STR"", ""DATE_BEGIN"", ""DATE_END"", ""DAYS_COUNT"", ""PRC_JS_CALC"",
-               ""PRC_NUM"", ""DATE_BREAK"", ""IS_ENDED"", ""ADDAGGREMENT_DATE"", ""IKUSNUM"",
-               ""CREATE_USER"", ""UPDATE_USER"", ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"",
-               ""NSO_CLIENT_ID""
-        FROM ""AVERS_DWH_NSO_REQUESTS""", conn);
-            using var reader = cmd.ExecuteReader();
+            var sql = @"
+                SELECT ""ID"", ""CLIENT_ACC"", ""CREATE_DATE"", ""SUMM"", ""ADDAGGREMENT_NUM"",
+                       ""PRC_STR"", ""DATE_BEGIN"", ""DATE_END"", ""DAYS_COUNT"", ""PRC_JS_CALC"",
+                       ""PRC_NUM"", ""DATE_BREAK"", ""IS_ENDED"", ""ADDAGGREMENT_DATE"", ""IKUSNUM"",
+                       ""CREATE_USER"", ""UPDATE_USER"", ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"",
+                       ""NSO_CLIENT_ID""
+                FROM ""AVERS_DWH_NSO_REQUESTS""
+                WHERE 1=1";
 
-            // Получаем индексы столбцов один раз
+            if (!string.IsNullOrEmpty(username))
+                sql += " AND \"CREATE_USER\" = @Username";
+            if (dateFrom.HasValue)
+                sql += " AND \"CREATE_DATE\" >= @DateFrom";
+            if (dateTo.HasValue)
+                sql += " AND \"CREATE_DATE\" <= @DateTo";
+
+            using var cmd = new NpgsqlCommand(sql, conn);
+            if (!string.IsNullOrEmpty(username))
+                cmd.Parameters.AddWithValue("Username", username);
+            if (dateFrom.HasValue)
+                cmd.Parameters.AddWithValue("DateFrom", dateFrom.Value.Date);
+            if (dateTo.HasValue)
+                cmd.Parameters.AddWithValue("DateTo", dateTo.Value.Date.AddDays(1).AddTicks(-1));
+
+            using var reader = cmd.ExecuteReader();
+            ReadRequests(reader, requests);
+            return requests;
+        }
+
+        private static void ReadRequests(NpgsqlDataReader reader, List<Request> requests)
+        {
             int idIndex = reader.GetOrdinal("ID");
             int clientAccIndex = reader.GetOrdinal("CLIENT_ACC");
             int createDateIndex = reader.GetOrdinal("CREATE_DATE");
@@ -1758,7 +1829,6 @@ namespace BankTask.Data
             int noteIndex = reader.GetOrdinal("NOTE");
             int errMessageIndex = reader.GetOrdinal("ERR_MESSAGE");
             int nsoClientIdIndex = reader.GetOrdinal("NSO_CLIENT_ID");
-
             while (reader.Read())
             {
                 requests.Add(new Request
@@ -1786,10 +1856,7 @@ namespace BankTask.Data
                     NSO_CLIENT_ID = reader.GetInt32(nsoClientIdIndex)
                 });
             }
-            return requests;
         }
-
-        // Добавить заявку
 
         public static void AddRequest(Request request)
         {
@@ -1807,7 +1874,6 @@ namespace BankTask.Data
                 @DATE_BREAK, @IS_ENDED, @ADDAGGREMENT_DATE, @IKUSNUM,
                 @CREATE_USER, @UPDATE_USER, @UPDATE_DATE, @NOTE, @ERR_MESSAGE,
                 @NSO_CLIENT_ID)", conn);
-
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.CLIENT_ACC;
             cmd.Parameters.Add("@CREATE_DATE", NpgsqlTypes.NpgsqlDbType.Timestamp).Value = request.CREATE_DATE;
             cmd.Parameters.Add("@SUMM", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.SUMM ?? (object)DBNull.Value;
@@ -1828,12 +1894,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@NSO_CLIENT_ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.NSO_CLIENT_ID;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Обновить заявку
-        // Обновить заявку
         public static void UpdateRequest(Request request)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -1861,7 +1924,6 @@ namespace BankTask.Data
             ""ERR_MESSAGE"" = @ERR_MESSAGE,
             ""NSO_CLIENT_ID"" = @NSO_CLIENT_ID
         WHERE ""ID"" = @ID", conn);
-
             cmd.Parameters.Add("@ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.ID;
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.CLIENT_ACC;
             cmd.Parameters.Add("@CREATE_DATE", NpgsqlTypes.NpgsqlDbType.Timestamp).Value = request.CREATE_DATE;
@@ -1883,11 +1945,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@NSO_CLIENT_ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.NSO_CLIENT_ID;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Удалить заявку
         public static void DeleteRequest(int id)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -1955,7 +2015,8 @@ namespace BankTask
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-
+            txtUsername.Text = "admin";
+            txtPassword.Text = "adminpass";
         }
     }
 }
@@ -2198,22 +2259,15 @@ namespace BankTask
 
 <file path="BankTask/MainForm.cs">
 using System;
-using System.Linq;
 using System.Windows.Forms;
 using BankTask.Data;
 using BankTask.Models;
 using BankTask.Services;
-private System.Windows.Forms.Button btnAddRequest;
-private System.Windows.Forms.Button btnEditRequest;
-private System.Windows.Forms.Button btnDeleteRequest;
-
 
 namespace BankTask
 {
     public partial class MainForm : Form
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-
         public MainForm()
         {
             InitializeComponent();
@@ -2222,9 +2276,56 @@ namespace BankTask
 
         private void LoadData()
         {
-            dgvClients.DataSource = Data.DbAccess.GetClients();
-            dgvRequests.DataSource = Data.DbAccess.GetRequests();
+            if (Services.AuthService.IsAdmin)
+            {
+                dgvClients.DataSource = Data.DbAccess.GetClients();
+                dgvRequests.DataSource = Data.DbAccess.GetRequests();
+            }
+            else
+            {
+                string currentUser = Services.AuthService.CurrentUser;
+                dgvClients.DataSource = Data.DbAccess.GetClientsByUser(currentUser);
+                dgvRequests.DataSource = Data.DbAccess.GetRequestsByUser(currentUser);
+            }
         }
+
+        // === Клиенты ===
+        private void btnAddClient_Click(object sender, EventArgs e)
+        {
+            new ClientForm().ShowDialog();
+            LoadData();
+        }
+
+        private void btnEditClient_Click(object sender, EventArgs e)
+        {
+            if (dgvClients.CurrentRow?.DataBoundItem is Client client)
+            {
+                new ClientForm(client).ShowDialog();
+                LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Выберите клиента для редактирования.");
+            }
+        }
+
+        private void btnDeleteClient_Click(object sender, EventArgs e)
+        {
+            if (dgvClients.CurrentRow?.DataBoundItem is Client client)
+            {
+                if (MessageBox.Show($"Удалить клиента ID={client.ID}?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Data.DbAccess.DeleteClient(client.ID);
+                    LoadData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите клиента для удаления.");
+            }
+        }
+
+        // === Заявки ===
         private void btnAddRequest_Click(object sender, EventArgs e)
         {
             new RequestForm().ShowDialog();
@@ -2248,8 +2349,7 @@ namespace BankTask
         {
             if (dgvRequests.CurrentRow?.DataBoundItem is Request request)
             {
-                if (MessageBox.Show($"Удалить заявку ID={request.ID}?", "Подтверждение",
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show($"Удалить заявку ID={request.ID}?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Data.DbAccess.DeleteRequest(request.ID);
                     LoadData();
@@ -2261,24 +2361,13 @@ namespace BankTask
             }
         }
 
-        private void btnAddClient_Click(object sender, EventArgs e)
-        {
-            new ClientForm().ShowDialog();
-            LoadData();
-        }
-
-        private void btnEditClient_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Редактирование клиента (заглушка)", "Информация");        }
-
-        private void btnDeleteClient_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Удаление клиента (заглушка)", "Информация");
-        }
-
+        // === Прочее ===
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            new ExcelService().ExportClientsToExcel(_context.Clients.ToList());
+            var clients = Services.AuthService.IsAdmin
+                ? Data.DbAccess.GetClients()
+                : Data.DbAccess.GetClientsByUser(Services.AuthService.CurrentUser);
+            new ExcelService().ExportClientsToExcel(clients);
         }
 
         private void btnImportExcel_Click(object sender, EventArgs e)
@@ -2299,58 +2388,20 @@ namespace BankTask
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _context.Dispose();
-        }
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            _context.Dispose();
-            base.OnFormClosed(e);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-        }
-        private void btnAddRequest_Click(object sender, EventArgs e)
-        {
-            new RequestForm().ShowDialog();
-            LoadData(); // Перезагружаем данные после добавления
-        }
-
-        private void btnEditRequest_Click(object sender, EventArgs e)
-        {
-            if (dgvRequests.CurrentRow?.DataBoundItem is Request request)
-            {
-                new RequestForm(request).ShowDialog();
-                LoadData(); // Перезагружаем данные после редактирования
-            }
-            else
-            {
-                MessageBox.Show("Выберите заявку для редактирования.");
-            }
-        }
-
-        private void btnDeleteRequest_Click(object sender, EventArgs e)
-        {
-            if (dgvRequests.CurrentRow?.DataBoundItem is Request request)
-            {
-                if (MessageBox.Show($"Удалить заявку ID={request.ID}?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Data.DbAccess.DeleteRequest(request.ID);
-                    LoadData(); // Перезагружаем данные после удаления
-                }
-            }
-            else
-            {
-                MessageBox.Show("Выберите заявку для удаления.");
-            }
         }
     }
 }
 </file>
 
 <file path="BankTask/MainForm.Designer.cs">
+using System.Windows.Forms;
+using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Office2010.Excel;
+
 namespace BankTask
 {
     partial class MainForm
@@ -2368,6 +2419,7 @@ namespace BankTask
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnPrint = new System.Windows.Forms.Button();
@@ -2378,6 +2430,9 @@ namespace BankTask
             this.btnAddClient = new System.Windows.Forms.Button();
             this.dgvClients = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnDeleteRequest = new System.Windows.Forms.Button();
+            this.btnEditRequest = new System.Windows.Forms.Button();
+            this.btnAddRequest = new System.Windows.Forms.Button();
             this.dgvRequests = new System.Windows.Forms.DataGridView();
             this.btnExit = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -2386,20 +2441,20 @@ namespace BankTask
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).BeginInit();
             this.SuspendLayout();
+
             // 
             // tabControl1
             // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(16, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1067, 492);
-            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPage1.Controls.Add(this.btnPrint);
             this.tabPage1.Controls.Add(this.btnExportExcel);
             this.tabPage1.Controls.Add(this.btnImportExcel);
@@ -2407,171 +2462,113 @@ namespace BankTask
             this.tabPage1.Controls.Add(this.btnEditClient);
             this.tabPage1.Controls.Add(this.btnAddClient);
             this.tabPage1.Controls.Add(this.dgvClients);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1059, 463);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Клиенты";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(800, 418);
-            this.btnPrint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnPrint, "btnPrint");
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(100, 28);
-            this.btnPrint.TabIndex = 6;
-            this.btnPrint.Text = "Печать";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // btnExportExcel
             // 
-            this.btnExportExcel.Location = new System.Drawing.Point(693, 418);
-            this.btnExportExcel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnExportExcel, "btnExportExcel");
             this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(100, 28);
-            this.btnExportExcel.TabIndex = 5;
-            this.btnExportExcel.Text = "Экспорт";
             this.btnExportExcel.UseVisualStyleBackColor = true;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
             // btnImportExcel
             // 
-            this.btnImportExcel.Location = new System.Drawing.Point(587, 418);
-            this.btnImportExcel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnImportExcel, "btnImportExcel");
             this.btnImportExcel.Name = "btnImportExcel";
-            this.btnImportExcel.Size = new System.Drawing.Size(100, 28);
-            this.btnImportExcel.TabIndex = 4;
-            this.btnImportExcel.Text = "Импорт";
             this.btnImportExcel.UseVisualStyleBackColor = true;
             this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // btnDeleteClient
             // 
-            this.btnDeleteClient.Location = new System.Drawing.Point(480, 418);
-            this.btnDeleteClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnDeleteClient, "btnDeleteClient");
             this.btnDeleteClient.Name = "btnDeleteClient";
-            this.btnDeleteClient.Size = new System.Drawing.Size(100, 28);
-            this.btnDeleteClient.TabIndex = 3;
-            this.btnDeleteClient.Text = "Удалить";
             this.btnDeleteClient.UseVisualStyleBackColor = true;
             this.btnDeleteClient.Click += new System.EventHandler(this.btnDeleteClient_Click);
             // 
             // btnEditClient
             // 
-            this.btnEditClient.Location = new System.Drawing.Point(373, 418);
-            this.btnEditClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnEditClient, "btnEditClient");
             this.btnEditClient.Name = "btnEditClient";
-            this.btnEditClient.Size = new System.Drawing.Size(100, 28);
-            this.btnEditClient.TabIndex = 2;
-            this.btnEditClient.Text = "Редакт";
             this.btnEditClient.UseVisualStyleBackColor = true;
             this.btnEditClient.Click += new System.EventHandler(this.btnEditClient_Click);
             // 
             // btnAddClient
             // 
-            this.btnAddClient.Location = new System.Drawing.Point(267, 418);
-            this.btnAddClient.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnAddClient, "btnAddClient");
             this.btnAddClient.Name = "btnAddClient";
-            this.btnAddClient.Size = new System.Drawing.Size(100, 28);
-            this.btnAddClient.TabIndex = 1;
-            this.btnAddClient.Text = "Добавить";
             this.btnAddClient.UseVisualStyleBackColor = true;
             this.btnAddClient.Click += new System.EventHandler(this.btnAddClient_Click);
             // 
             // dgvClients
             // 
+            resources.ApplyResources(this.dgvClients, "dgvClients");
+            this.dgvClients.BackgroundColor = System.Drawing.Color.AliceBlue;
+            this.dgvClients.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvClients.Location = new System.Drawing.Point(8, 7);
-            this.dgvClients.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvClients.GridColor = System.Drawing.Color.Cyan;
             this.dgvClients.Name = "dgvClients";
-            this.dgvClients.RowHeadersWidth = 51;
-            this.dgvClients.Size = new System.Drawing.Size(1040, 394);
-            this.dgvClients.TabIndex = 0;
+            // 
             // tabPage2
             // 
+            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Controls.Add(this.btnDeleteRequest);
             this.tabPage2.Controls.Add(this.btnEditRequest);
             this.tabPage2.Controls.Add(this.btnAddRequest);
             this.tabPage2.Controls.Add(this.dgvRequests);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1059, 463);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Заявки";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dgvRequests
-            // 
-            this.dgvRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRequests.Location = new System.Drawing.Point(8, 7);
-            this.dgvRequests.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dgvRequests.Name = "dgvRequests";
-            this.dgvRequests.RowHeadersWidth = 51;
-            this.dgvRequests.Size = new System.Drawing.Size(1040, 394);
-            this.dgvRequests.TabIndex = 0;
-            // 
-            // btnAddRequest
-            // 
-            this.btnAddRequest.Location = new System.Drawing.Point(267, 418);
-            this.btnAddRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnAddRequest.Name = "btnAddRequest";
-            this.btnAddRequest.Size = new System.Drawing.Size(100, 28);
-            this.btnAddRequest.TabIndex = 1;
-            this.btnAddRequest.Text = "Добавить";
-            this.btnAddRequest.UseVisualStyleBackColor = true;
-            this.btnAddRequest.Click += new System.EventHandler(this.btnAddRequest_Click);
-            // 
-            // btnEditRequest
-            // 
-            this.btnEditRequest.Location = new System.Drawing.Point(373, 418);
-            this.btnEditRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnEditRequest.Name = "btnEditRequest";
-            this.btnEditRequest.Size = new System.Drawing.Size(100, 28);
-            this.btnEditRequest.TabIndex = 2;
-            this.btnEditRequest.Text = "Редакт";
-            this.btnEditRequest.UseVisualStyleBackColor = true;
-            this.btnEditRequest.Click += new System.EventHandler(this.btnEditRequest_Click);
             // 
             // btnDeleteRequest
             // 
-            this.btnDeleteRequest.Location = new System.Drawing.Point(480, 418);
-            this.btnDeleteRequest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnDeleteRequest, "btnDeleteRequest");
             this.btnDeleteRequest.Name = "btnDeleteRequest";
-            this.btnDeleteRequest.Size = new System.Drawing.Size(100, 28);
-            this.btnDeleteRequest.TabIndex = 3;
-            this.btnDeleteRequest.Text = "Удалить";
             this.btnDeleteRequest.UseVisualStyleBackColor = true;
             this.btnDeleteRequest.Click += new System.EventHandler(this.btnDeleteRequest_Click);
             // 
+            // btnEditRequest
+            // 
+            resources.ApplyResources(this.btnEditRequest, "btnEditRequest");
+            this.btnEditRequest.Name = "btnEditRequest";
+            this.btnEditRequest.UseVisualStyleBackColor = true;
+            this.btnEditRequest.Click += new System.EventHandler(this.btnEditRequest_Click);
+            // 
+            // btnAddRequest
+            // 
+            resources.ApplyResources(this.btnAddRequest, "btnAddRequest");
+            this.btnAddRequest.Name = "btnAddRequest";
+            this.btnAddRequest.UseVisualStyleBackColor = true;
+            this.btnAddRequest.Click += new System.EventHandler(this.btnAddRequest_Click);
+            // 
+            // dgvRequests
+            // 
+            resources.ApplyResources(this.dgvRequests, "dgvRequests");
+            this.dgvRequests.BackgroundColor = System.Drawing.Color.AliceBlue;
+            this.dgvRequests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRequests.GridColor = System.Drawing.Color.Cyan;
+            this.dgvRequests.Name = "dgvRequests";
+            // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(983, 514);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(100, 28);
-            this.btnExit.TabIndex = 1;
-            this.btnExit.Text = "Выход";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1099, 558);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
-            this.Text = "Банковская система - Клиенты и заявки";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).EndInit();
@@ -2581,6 +2578,10 @@ namespace BankTask
 
         }
 
+
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvClients;
         private System.Windows.Forms.DataGridView dgvRequests;
         private System.Windows.Forms.Button btnAddClient;
@@ -2590,9 +2591,12 @@ namespace BankTask
         private System.Windows.Forms.Button btnExportExcel;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button btnAddRequest;
+        private System.Windows.Forms.Button btnEditRequest;
+        private System.Windows.Forms.Button btnDeleteRequest;
+        private Label lblClientDateFrom, lblClientDateTo, lblRequestDateFrom, lblRequestDateTo;
+        private DateTimePicker dtpClientDateFrom, dtpClientDateTo, dtpRequestDateFrom, dtpRequestDateTo;
+        private Button btnFilterClients, btnClearClientFilter, btnFilterRequests, btnClearRequestFilter;
     }
 }
 </file>
@@ -2717,6 +2721,571 @@ namespace BankTask
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1099, 558</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteClient.Name" xml:space="preserve">
+    <value>btnDeleteClient</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnDeleteClient.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnAddRequest.Text" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="&gt;&gt;btnAddRequest.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteRequest.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnEditRequest.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnExit.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteRequest.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnDeleteRequest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>480, 418</value>
+  </data>
+  <data name="btnEditRequest.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnExportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="dgvRequests.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="&gt;&gt;dgvClients.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btnAddRequest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteRequest.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnAddClient.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnExportExcel.Text" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
+  </data>
+  <data name="tabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;btnPrint.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabPage2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteClient.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;btnExit.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnPrint.Name" xml:space="preserve">
+    <value>btnPrint</value>
+  </data>
+  <data name="&gt;&gt;btnEditClient.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnEditRequest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnPrint.Text" xml:space="preserve">
+    <value>Печать</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Name" xml:space="preserve">
+    <value>btnExit</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Заявки</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnImportExcel.Name" xml:space="preserve">
+    <value>btnImportExcel</value>
+  </data>
+  <data name="btnDeleteClient.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabPage1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;btnImportExcel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnAddClient.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 418</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="dgvClients.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnEditClient.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="dgvClients.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="tabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEditRequest.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnAddClient.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteClient.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;dgvClients.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnAddClient.Text" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="btnPrint.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnPrint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEditClient.Name" xml:space="preserve">
+    <value>btnEditClient</value>
+  </data>
+  <data name="btnEditRequest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>373, 418</value>
+  </data>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1059, 463</value>
+  </data>
+  <data name="btnImportExcel.Text" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="btnAddClient.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Банковская система - Клиенты и заявки</value>
+  </data>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnPrint.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteRequest.Name" xml:space="preserve">
+    <value>btnDeleteRequest</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="btnDeleteRequest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;btnEditClient.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnDeleteRequest.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;btnAddRequest.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnPrint.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnEditRequest.Text" xml:space="preserve">
+    <value>Редакт</value>
+  </data>
+  <data name="dgvRequests.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 7</value>
+  </data>
+  <data name="btnDeleteRequest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;btnAddRequest.Name" xml:space="preserve">
+    <value>btnAddRequest</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="btnAddRequest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 418</value>
+  </data>
+  <data name="&gt;&gt;btnEditRequest.Name" xml:space="preserve">
+    <value>btnEditRequest</value>
+  </data>
+  <data name="btnEditClient.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnExportExcel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>693, 418</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 15</value>
+  </data>
+  <data name="btnImportExcel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="btnImportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnDeleteClient.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="btnExit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1059, 463</value>
+  </data>
+  <data name="dgvRequests.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1040, 394</value>
+  </data>
+  <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>983, 514</value>
+  </data>
+  <data name="dgvRequests.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="dgvClients.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 7</value>
+  </data>
+  <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="btnAddRequest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Клиенты</value>
+  </data>
+  <data name="&gt;&gt;btnImportExcel.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1067, 492</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;dgvClients.Name" xml:space="preserve">
+    <value>dgvClients</value>
+  </data>
+  <data name="&gt;&gt;btnExportExcel.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="btnPrint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>800, 418</value>
+  </data>
+  <data name="&gt;&gt;btnExportExcel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnEditClient.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnImportExcel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>587, 418</value>
+  </data>
+  <data name="&gt;&gt;btnAddClient.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnAddClient.Name" xml:space="preserve">
+    <value>btnAddClient</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnExit.Text" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="&gt;&gt;dgvClients.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="btnDeleteClient.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;btnExportExcel.Name" xml:space="preserve">
+    <value>btnExportExcel</value>
+  </data>
+  <data name="dgvClients.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1040, 394</value>
+  </data>
+  <data name="btnAddClient.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="btnAddRequest.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnAddRequest.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnEditRequest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="btnDeleteClient.Location" type="System.Drawing.Point, System.Drawing">
+    <value>480, 418</value>
+  </data>
+  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnExportExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="btnDeleteRequest.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.Name" xml:space="preserve">
+    <value>dgvRequests</value>
+  </data>
+  <data name="&gt;&gt;btnEditClient.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="btnPrint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="dgvClients.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnExportExcel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteClient.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dgvRequests.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnEditClient.Location" type="System.Drawing.Point, System.Drawing">
+    <value>373, 418</value>
+  </data>
+  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnAddClient.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnEditClient.Text" xml:space="preserve">
+    <value>Редакт</value>
+  </data>
+  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEditRequest.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnExportExcel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>ru</value>
+  </metadata>
+</root>
+</file>
+
+<file path="BankTask/MainForm.ru.resx">
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
 </root>
 </file>
 
@@ -2735,7 +3304,7 @@ namespace BankTask.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(25)]
+        [StringLength(35)]
         public string CLIENT_ACC { get; set; }
 
         public DateTime DATE_BEGIN { get; set; }
@@ -2748,10 +3317,10 @@ namespace BankTask.Models
 
         public DateTime? AGGREMENT_DATE { get; set; }
 
-        [StringLength(25)]
+        [StringLength(35)]
         public string ACC_N068 { get; set; }
 
-        [StringLength(25)]
+        [StringLength(35)]
         public string ACC_47426 { get; set; }
 
         public bool IS_ACTIVE { get; set; } = true;
@@ -2793,7 +3362,7 @@ namespace BankTask.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(35)]
         public string CLIENT_ACC { get; set; }
 
         public DateTime CREATE_DATE { get; set; }
@@ -3175,9 +3744,11 @@ namespace BankTask.Properties
 
 <file path="BankTask/RequestForm.cs">
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using BankTask.Data;
 using BankTask.Models;
+using BankTask.Services;
 
 namespace BankTask
 {
@@ -3191,6 +3762,21 @@ namespace BankTask
             _request = new Request();
             _request.CREATE_DATE = DateTime.Now;
             _request.DATE_BEGIN = DateTime.Now;
+
+            // Автоматическое заполнение CLIENT_ACC для не-admin
+            if (!Services.AuthService.IsAdmin)
+            {
+                var currentUser = Services.AuthService.CurrentUser;
+                var userClient = Data.DbAccess.GetClientsByUser(currentUser).FirstOrDefault();
+                if (userClient != null)
+                {
+                    _request.CLIENT_ACC = userClient.CLIENT_ACC;
+                }
+                else
+                {
+                    MessageBox.Show("У вас нет клиента. Сначала создайте карточку клиента.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         public RequestForm(Request request)
@@ -3203,7 +3789,6 @@ namespace BankTask
         private void LoadData()
         {
             if (_request.ID == 0) return;
-
             txtClientAcc.Text = _request.CLIENT_ACC;
             dtpCreateDate.Value = _request.CREATE_DATE;
             txtSumm.Text = _request.SUMM;
@@ -3224,11 +3809,20 @@ namespace BankTask
             txtNote.Text = _request.NOTE;
             txtErrMessage.Text = _request.ERR_MESSAGE;
             numNsoClientId.Value = _request.NSO_CLIENT_ID;
+
+            // Блокировка CLIENT_ACC и DAYS_COUNT для не-admin
+            txtClientAcc.Enabled = Services.AuthService.IsAdmin;
+            txtDaysCount.ReadOnly = true;
         }
 
         private void SaveData()
         {
-            _request.CLIENT_ACC = txtClientAcc.Text.Trim();
+            // Только admin может менять CLIENT_ACC
+            if (Services.AuthService.IsAdmin)
+            {
+                _request.CLIENT_ACC = txtClientAcc.Text.Trim();
+            }
+
             _request.CREATE_DATE = dtpCreateDate.Value;
             _request.SUMM = string.IsNullOrWhiteSpace(txtSumm.Text) ? null : txtSumm.Text.Trim();
             _request.ADDAGGREMENT_NUM = string.IsNullOrWhiteSpace(txtAddAgreementNum.Text) ? null : txtAddAgreementNum.Text.Trim();
@@ -3242,29 +3836,32 @@ namespace BankTask
             _request.IS_ENDED = (int)numIsEnded.Value == 0 ? null : (int?)numIsEnded.Value;
             _request.ADDAGGREMENT_DATE = dtpAddAgreementDate.Value == DateTime.MinValue ? (DateTime?)null : dtpAddAgreementDate.Value;
             _request.IKUSNUM = (int)numIkusnum.Value;
-            _request.CREATE_USER = string.IsNullOrWhiteSpace(txtCreateUser.Text) ? null : txtCreateUser.Text.Trim();
-            _request.UPDATE_USER = string.IsNullOrWhiteSpace(txtUpdateUser.Text) ? null : txtUpdateUser.Text.Trim();
-            _request.UPDATE_DATE = dtpUpdateDate.Value == DateTime.MinValue ? (DateTime?)null : dtpUpdateDate.Value;
             _request.NOTE = string.IsNullOrWhiteSpace(txtNote.Text) ? null : txtNote.Text.Trim();
             _request.ERR_MESSAGE = string.IsNullOrWhiteSpace(txtErrMessage.Text) ? null : txtErrMessage.Text.Trim();
             _request.NSO_CLIENT_ID = (int)numNsoClientId.Value;
+
+            string currentUser = Services.AuthService.CurrentUser;
+            if (_request.ID == 0)
+            {
+                _request.CREATE_USER = currentUser;
+                _request.CREATE_DATE = DateTime.Now;
+            }
+            _request.UPDATE_USER = currentUser;
+            _request.UPDATE_DATE = DateTime.Now;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveData();
-
             if (string.IsNullOrWhiteSpace(_request.CLIENT_ACC))
             {
                 MessageBox.Show("CLIENT_ACC обязателен", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             if (_request.ID == 0)
-                DbAccess.AddRequest(_request);
+                Data.DbAccess.AddRequest(_request);
             else
-                DbAccess.UpdateRequest(_request);
-
+                Data.DbAccess.UpdateRequest(_request);
             MessageBox.Show("Сохранено");
             DialogResult = DialogResult.OK;
             Close();
@@ -3274,71 +3871,628 @@ namespace BankTask
         {
             Close();
         }
+
+        private void RequestForm_Load(object sender, EventArgs e)
+        {
+        }
+
+        // === Автоматический расчёт количества дней ===
+        private void CalculateDaysCount()
+        {
+            if (dtpDateEnd.Value != DateTime.MinValue && dtpDateBegin.Value != DateTime.MinValue)
+            {
+                int days = (dtpDateEnd.Value.Date - dtpDateBegin.Value.Date).Days;
+                txtDaysCount.Text = days.ToString();
+            }
+            else
+            {
+                txtDaysCount.Text = string.Empty;
+            }
+        }
+
+        private void dtpDateBegin_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateDaysCount();
+        }
+
+        private void dtpDateEnd_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateDaysCount();
+        }
+
+        private void dtpDateBreak_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 </file>
 
 <file path="BankTask/RequestForm.Designer.cs">
-using System.Windows.Forms;
-
 namespace BankTask
 {
     partial class RequestForm
     {
         private System.ComponentModel.IContainer components = null;
-        private TextBox txtClientAcc;
-        private DateTimePicker dtpCreateDate;
-        private TextBox txtSumm;
-        private TextBox txtAddAgreementNum;
-        private TextBox txtPrcStr;
-        private DateTimePicker dtpDateBegin;
-        private DateTimePicker dtpDateEnd;
-        private TextBox txtDaysCount;
-        private NumericUpDown numPrcJsCalc;
-        private NumericUpDown numPrcNum;
-        private DateTimePicker dtpDateBreak;
-        private NumericUpDown numIsEnded;
-        private DateTimePicker dtpAddAgreementDate;
-        private NumericUpDown numIkusnum;
-        private TextBox txtCreateUser;
-        private TextBox txtUpdateUser;
-        private DateTimePicker dtpUpdateDate;
-        private TextBox txtNote;
-        private TextBox txtErrMessage;
-        private NumericUpDown numNsoClientId;
-        private Button btnSave;
-        private Button btnCancel;
-        // ... labels ...
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null)) components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            // Пример инициализации одного поля
-            this.txtClientAcc = new TextBox();
-            this.txtClientAcc.Location = new System.Drawing.Point(150, 20);
+            this.txtClientAcc = new System.Windows.Forms.MaskedTextBox();
+            this.dtpCreateDate = new System.Windows.Forms.DateTimePicker();
+            this.txtSumm = new System.Windows.Forms.MaskedTextBox();
+            this.txtAddAgreementNum = new System.Windows.Forms.TextBox();
+            this.txtPrcStr = new System.Windows.Forms.TextBox();
+            this.dtpDateBegin = new System.Windows.Forms.DateTimePicker();
+            this.dtpDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.txtDaysCount = new System.Windows.Forms.TextBox();
+            this.numPrcJsCalc = new System.Windows.Forms.NumericUpDown();
+            this.numPrcNum = new System.Windows.Forms.NumericUpDown();
+            this.dtpDateBreak = new System.Windows.Forms.DateTimePicker();
+            this.numIsEnded = new System.Windows.Forms.NumericUpDown();
+            this.dtpAddAgreementDate = new System.Windows.Forms.DateTimePicker();
+            this.numIkusnum = new System.Windows.Forms.NumericUpDown();
+            this.txtCreateUser = new System.Windows.Forms.TextBox();
+            this.txtUpdateUser = new System.Windows.Forms.TextBox();
+            this.dtpUpdateDate = new System.Windows.Forms.DateTimePicker();
+            this.txtNote = new System.Windows.Forms.TextBox();
+            this.txtErrMessage = new System.Windows.Forms.TextBox();
+            this.numNsoClientId = new System.Windows.Forms.NumericUpDown();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrcJsCalc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrcNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIsEnded)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIkusnum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNsoClientId)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // txtClientAcc
+            // 
+            this.txtClientAcc.Enabled = false;
+            this.txtClientAcc.Location = new System.Drawing.Point(220, 47);
+            this.txtClientAcc.Mask = "00000-000-0-0000-0000000";
+            this.txtClientAcc.Name = "txtClientAcc";
             this.txtClientAcc.Size = new System.Drawing.Size(200, 22);
-            // ... добавьте остальные элементы аналогично ...
-            this.btnSave = new Button();
+            this.txtClientAcc.TabIndex = 2;
+            // 
+            // dtpCreateDate
+            // 
+            this.dtpCreateDate.Enabled = false;
+            this.dtpCreateDate.Location = new System.Drawing.Point(220, 77);
+            this.dtpCreateDate.Name = "dtpCreateDate";
+            this.dtpCreateDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpCreateDate.TabIndex = 4;
+            // 
+            // txtSumm
+            // 
+            this.txtSumm.Location = new System.Drawing.Point(220, 107);
+            this.txtSumm.Mask = "000,000,000,000,000,000,000,";
+            this.txtSumm.Name = "txtSumm";
+            this.txtSumm.Size = new System.Drawing.Size(200, 22);
+            this.txtSumm.TabIndex = 6;
+            // 
+            // txtAddAgreementNum
+            // 
+            this.txtAddAgreementNum.Location = new System.Drawing.Point(220, 137);
+            this.txtAddAgreementNum.Name = "txtAddAgreementNum";
+            this.txtAddAgreementNum.Size = new System.Drawing.Size(200, 22);
+            this.txtAddAgreementNum.TabIndex = 8;
+            // 
+            // txtPrcStr
+            // 
+            this.txtPrcStr.Location = new System.Drawing.Point(220, 167);
+            this.txtPrcStr.Name = "txtPrcStr";
+            this.txtPrcStr.Size = new System.Drawing.Size(200, 22);
+            this.txtPrcStr.TabIndex = 10;
+            // 
+            // dtpDateBegin
+            // 
+            this.dtpDateBegin.Enabled = false;
+            this.dtpDateBegin.Location = new System.Drawing.Point(220, 197);
+            this.dtpDateBegin.Name = "dtpDateBegin";
+            this.dtpDateBegin.Size = new System.Drawing.Size(200, 22);
+            this.dtpDateBegin.TabIndex = 12;
+            this.dtpDateBegin.ValueChanged += new System.EventHandler(this.dtpDateBegin_ValueChanged);
+            // 
+            // dtpDateEnd
+            // 
+            this.dtpDateEnd.Location = new System.Drawing.Point(220, 227);
+            this.dtpDateEnd.Name = "dtpDateEnd";
+            this.dtpDateEnd.Size = new System.Drawing.Size(200, 22);
+            this.dtpDateEnd.TabIndex = 14;
+            this.dtpDateEnd.ValueChanged += new System.EventHandler(this.dtpDateEnd_ValueChanged);
+            // 
+            // txtDaysCount
+            // 
+            this.txtDaysCount.Enabled = false;
+            this.txtDaysCount.Location = new System.Drawing.Point(220, 257);
+            this.txtDaysCount.Name = "txtDaysCount";
+            this.txtDaysCount.Size = new System.Drawing.Size(200, 22);
+            this.txtDaysCount.TabIndex = 16;
+            // 
+            // numPrcJsCalc
+            // 
+            this.numPrcJsCalc.Location = new System.Drawing.Point(220, 373);
+            this.numPrcJsCalc.Name = "numPrcJsCalc";
+            this.numPrcJsCalc.Size = new System.Drawing.Size(200, 22);
+            this.numPrcJsCalc.TabIndex = 18;
+            this.numPrcJsCalc.Visible = false;
+            // 
+            // numPrcNum
+            // 
+            this.numPrcNum.Location = new System.Drawing.Point(220, 401);
+            this.numPrcNum.Name = "numPrcNum";
+            this.numPrcNum.Size = new System.Drawing.Size(200, 22);
+            this.numPrcNum.TabIndex = 20;
+            this.numPrcNum.Visible = false;
+            // 
+            // dtpDateBreak
+            // 
+            this.dtpDateBreak.Enabled = false;
+            this.dtpDateBreak.Location = new System.Drawing.Point(220, 573);
+            this.dtpDateBreak.Name = "dtpDateBreak";
+            this.dtpDateBreak.Size = new System.Drawing.Size(200, 22);
+            this.dtpDateBreak.TabIndex = 22;
+            this.dtpDateBreak.Visible = false;
+            this.dtpDateBreak.ValueChanged += new System.EventHandler(this.dtpDateBreak_ValueChanged);
+            // 
+            // numIsEnded
+            // 
+            this.numIsEnded.Location = new System.Drawing.Point(220, 431);
+            this.numIsEnded.Name = "numIsEnded";
+            this.numIsEnded.Size = new System.Drawing.Size(200, 22);
+            this.numIsEnded.TabIndex = 24;
+            this.numIsEnded.Visible = false;
+            // 
+            // dtpAddAgreementDate
+            // 
+            this.dtpAddAgreementDate.Enabled = false;
+            this.dtpAddAgreementDate.Location = new System.Drawing.Point(220, 601);
+            this.dtpAddAgreementDate.Name = "dtpAddAgreementDate";
+            this.dtpAddAgreementDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpAddAgreementDate.TabIndex = 26;
+            this.dtpAddAgreementDate.Visible = false;
+            // 
+            // numIkusnum
+            // 
+            this.numIkusnum.Location = new System.Drawing.Point(220, 459);
+            this.numIkusnum.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.numIkusnum.Name = "numIkusnum";
+            this.numIkusnum.Size = new System.Drawing.Size(200, 22);
+            this.numIkusnum.TabIndex = 28;
+            this.numIkusnum.Visible = false;
+            // 
+            // txtCreateUser
+            // 
+            this.txtCreateUser.Enabled = false;
+            this.txtCreateUser.Location = new System.Drawing.Point(220, 285);
+            this.txtCreateUser.Name = "txtCreateUser";
+            this.txtCreateUser.Size = new System.Drawing.Size(200, 22);
+            this.txtCreateUser.TabIndex = 30;
+            // 
+            // txtUpdateUser
+            // 
+            this.txtUpdateUser.Enabled = false;
+            this.txtUpdateUser.Location = new System.Drawing.Point(220, 315);
+            this.txtUpdateUser.Name = "txtUpdateUser";
+            this.txtUpdateUser.Size = new System.Drawing.Size(200, 22);
+            this.txtUpdateUser.TabIndex = 32;
+            // 
+            // dtpUpdateDate
+            // 
+            this.dtpUpdateDate.Enabled = false;
+            this.dtpUpdateDate.Location = new System.Drawing.Point(220, 345);
+            this.dtpUpdateDate.Name = "dtpUpdateDate";
+            this.dtpUpdateDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpUpdateDate.TabIndex = 34;
+            // 
+            // txtNote
+            // 
+            this.txtNote.Enabled = false;
+            this.txtNote.Location = new System.Drawing.Point(220, 487);
+            this.txtNote.Name = "txtNote";
+            this.txtNote.Size = new System.Drawing.Size(200, 22);
+            this.txtNote.TabIndex = 36;
+            this.txtNote.Visible = false;
+            // 
+            // txtErrMessage
+            // 
+            this.txtErrMessage.Enabled = false;
+            this.txtErrMessage.Location = new System.Drawing.Point(220, 517);
+            this.txtErrMessage.Name = "txtErrMessage";
+            this.txtErrMessage.Size = new System.Drawing.Size(200, 22);
+            this.txtErrMessage.TabIndex = 38;
+            this.txtErrMessage.Visible = false;
+            // 
+            // numNsoClientId
+            // 
+            this.numNsoClientId.Enabled = false;
+            this.numNsoClientId.Location = new System.Drawing.Point(220, 545);
+            this.numNsoClientId.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numNsoClientId.Name = "numNsoClientId";
+            this.numNsoClientId.Size = new System.Drawing.Size(200, 22);
+            this.numNsoClientId.TabIndex = 40;
+            this.numNsoClientId.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numNsoClientId.Visible = false;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(214, 629);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 28);
+            this.btnSave.TabIndex = 41;
             this.btnSave.Text = "Сохранить";
-            this.btnSave.Location = new System.Drawing.Point(150, 500);
-            this.btnSave.Click += btnSave_Click;
-            this.btnCancel = new Button();
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(320, 629);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 42;
             this.btnCancel.Text = "Отмена";
-            this.btnCancel.Location = new System.Drawing.Point(250, 500);
-            this.btnCancel.Click += btnCancel_Click;
-
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Номер счета:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(156, 16);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Дата создания заявки:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(20, 109);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 16);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Сумма:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 139);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 16);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Номер дополнения:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 169);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 16);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Заявка на:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 199);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(93, 16);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Дата начала:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 229);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 16);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Дата конца:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 259);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(123, 16);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Количество дней:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(20, 375);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(102, 16);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "PRC_JS_CALC:";
+            this.label9.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 403);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(76, 16);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "PRC_NUM:";
+            this.label10.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(20, 575);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(131, 16);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Дата расторжения:";
+            this.label11.Visible = false;
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(20, 433);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 16);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "IS_ENDED:";
+            this.label12.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 603);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(124, 16);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Дата дополнения:";
+            this.label13.Visible = false;
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(20, 461);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(71, 16);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "IKUSNUM:";
+            this.label14.Visible = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Enabled = false;
+            this.label15.Location = new System.Drawing.Point(20, 287);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(165, 16);
+            this.label15.TabIndex = 29;
+            this.label15.Text = "Создан пользователем:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Enabled = false;
+            this.label16.Location = new System.Drawing.Point(20, 317);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(182, 16);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Обновлен пользователем:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(20, 347);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(170, 32);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Дата обновления заявки\r\n:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Enabled = false;
+            this.label18.Location = new System.Drawing.Point(20, 489);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(48, 16);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "NOTE:";
+            this.label18.Visible = false;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Enabled = false;
+            this.label19.Location = new System.Drawing.Point(20, 519);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(112, 16);
+            this.label19.TabIndex = 37;
+            this.label19.Text = "ERR_MESSAGE:";
+            this.label19.Visible = false;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Enabled = false;
+            this.label20.Location = new System.Drawing.Point(20, 547);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(113, 16);
+            this.label20.TabIndex = 39;
+            this.label20.Text = "NSO_CLIENT_ID:";
+            this.label20.Visible = false;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label21.Location = new System.Drawing.Point(96, 9);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(254, 25);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "Редактирование заявки";
+            // 
+            // RequestForm
+            // 
+            this.ClientSize = new System.Drawing.Size(481, 865);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtClientAcc);
-            // ... добавьте остальные контролы ...
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dtpCreateDate);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtSumm);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtAddAgreementNum);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtPrcStr);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.dtpDateBegin);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.dtpDateEnd);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtDaysCount);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.numPrcJsCalc);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.numPrcNum);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.dtpDateBreak);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.numIsEnded);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.dtpAddAgreementDate);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.numIkusnum);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.txtCreateUser);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.txtUpdateUser);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.dtpUpdateDate);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.txtNote);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.txtErrMessage);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.numNsoClientId);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
+            this.Name = "RequestForm";
             this.Text = "Редактирование заявки";
-            this.Size = new System.Drawing.Size(600, 600);
+            this.Load += new System.EventHandler(this.RequestForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numPrcJsCalc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrcNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIsEnded)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIkusnum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNsoClientId)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
+        private System.Windows.Forms.MaskedTextBox txtClientAcc;
+        private System.Windows.Forms.DateTimePicker dtpCreateDate;
+        private System.Windows.Forms.MaskedTextBox txtSumm;
+        private System.Windows.Forms.TextBox txtAddAgreementNum;
+        private System.Windows.Forms.TextBox txtPrcStr;
+        private System.Windows.Forms.DateTimePicker dtpDateBegin;
+        private System.Windows.Forms.DateTimePicker dtpDateEnd;
+        private System.Windows.Forms.TextBox txtDaysCount;
+        private System.Windows.Forms.NumericUpDown numPrcJsCalc;
+        private System.Windows.Forms.NumericUpDown numPrcNum;
+        private System.Windows.Forms.DateTimePicker dtpDateBreak;
+        private System.Windows.Forms.NumericUpDown numIsEnded;
+        private System.Windows.Forms.DateTimePicker dtpAddAgreementDate;
+        private System.Windows.Forms.NumericUpDown numIkusnum;
+        private System.Windows.Forms.TextBox txtCreateUser;
+        private System.Windows.Forms.TextBox txtUpdateUser;
+        private System.Windows.Forms.DateTimePicker dtpUpdateDate;
+        private System.Windows.Forms.TextBox txtNote;
+        private System.Windows.Forms.TextBox txtErrMessage;
+        private System.Windows.Forms.NumericUpDown numNsoClientId;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
     }
 }
 </file>
@@ -3476,11 +4630,14 @@ namespace BankTask.Services
         private static readonly Dictionary<string, string> Users = new Dictionary<string, string>
         {
             { "admin", "adminpass" },
-            { "user", "userpass" }
+            { "user", "userpass" },
+            { "user2", "user2pass" },
+            { "user3" , "user3pass" },
+            { "user4" , "user4pass" }
         };
 
-        private static string _currentUser;
-        private static string _currentRole;
+        private static string _currentUser = string.Empty;
+        private static string _currentRole = string.Empty;
 
         public static bool Login(string username, string password)
         {
@@ -3582,7 +4739,6 @@ namespace BankTask.Services
                 Filter = "Excel Files|*.xlsx",
                 Title = "Выберите Excel файл"
             };
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (var wb = new XLWorkbook(openFileDialog.FileName))
@@ -3592,11 +4748,14 @@ namespace BankTask.Services
 
                     foreach (var row in rows)
                     {
+                        // Проверка на пустую строку (например, если ячейка ID пустая)
+                        if (row.Cell(1).IsEmpty() && row.Cell(2).IsEmpty()) continue;
+
                         var client = new Client
                         {
                             CLIENT_ACC = row.Cell(2).GetValue<string>(),
                             DATE_BEGIN = row.Cell(3).GetValue<DateTime>(),
-                            DATE_END = row.Cell(4).IsEmpty() ? (DateTime?)null : row.Cell(4).GetValue<DateTime>(), 
+                            DATE_END = row.Cell(4).IsEmpty() ? (DateTime?)null : row.Cell(4).GetValue<DateTime>(),
                             IKUSNUM = row.Cell(5).GetValue<int>(),
                             AGGREMENT_NUM = row.Cell(6).GetValue<string>(),
                             AGGREMENT_DATE = row.Cell(7).IsEmpty() ? (DateTime?)null : row.Cell(7).GetValue<DateTime>(),
@@ -3612,12 +4771,10 @@ namespace BankTask.Services
                             CLIENT_ACC_DOP = row.Cell(17).GetValue<string>()
                         };
 
-
+                        Data.DbAccess.AddClient(client);
                     }
-
-
-
                 }
+                MessageBox.Show("Клиенты успешно импортированы из Excel.");
             }
         }
     }

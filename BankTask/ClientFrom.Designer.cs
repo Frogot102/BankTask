@@ -21,8 +21,8 @@
             this.numIKUSNUM = new System.Windows.Forms.NumericUpDown();
             this.txtAgreementNum = new System.Windows.Forms.TextBox();
             this.dtpAgreementDate = new System.Windows.Forms.DateTimePicker();
-            this.txtAccN068 = new System.Windows.Forms.TextBox();
-            this.txtAcc47426 = new System.Windows.Forms.TextBox();
+            this.txtAccN068 = new System.Windows.Forms.MaskedTextBox();
+            this.txtAcc47426 = new System.Windows.Forms.MaskedTextBox();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.txtCreateUser = new System.Windows.Forms.TextBox();
             this.dtpCreateDate = new System.Windows.Forms.DateTimePicker();
@@ -114,6 +114,7 @@
             // 
             this.txtAccN068.Location = new System.Drawing.Point(201, 195);
             this.txtAccN068.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAccN068.Mask = "68000 000 0 0000 0000000";
             this.txtAccN068.Name = "txtAccN068";
             this.txtAccN068.Size = new System.Drawing.Size(265, 22);
             this.txtAccN068.TabIndex = 6;
@@ -122,9 +123,11 @@
             // 
             this.txtAcc47426.Location = new System.Drawing.Point(201, 226);
             this.txtAcc47426.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAcc47426.Mask = "47426 000 0 0000 0000000";
             this.txtAcc47426.Name = "txtAcc47426";
             this.txtAcc47426.Size = new System.Drawing.Size(265, 22);
             this.txtAcc47426.TabIndex = 7;
+            this.txtAcc47426.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.txtAcc47426_MaskInputRejected);
             // 
             // chkIsActive
             // 
@@ -167,6 +170,7 @@
             this.txtUpdateUser.Name = "txtUpdateUser";
             this.txtUpdateUser.Size = new System.Drawing.Size(265, 22);
             this.txtUpdateUser.TabIndex = 11;
+            this.txtUpdateUser.TextChanged += new System.EventHandler(this.txtUpdateUser_TextChanged);
             // 
             // dtpUpdateDate
             // 
@@ -458,8 +462,8 @@
         private System.Windows.Forms.NumericUpDown numIKUSNUM;
         private System.Windows.Forms.TextBox txtAgreementNum;
         private System.Windows.Forms.DateTimePicker dtpAgreementDate;
-        private System.Windows.Forms.TextBox txtAccN068;
-        private System.Windows.Forms.TextBox txtAcc47426;
+        private System.Windows.Forms.MaskedTextBox txtAccN068;
+        private System.Windows.Forms.MaskedTextBox txtAcc47426;
         private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.TextBox txtCreateUser;
         private System.Windows.Forms.DateTimePicker dtpCreateDate;

@@ -12,7 +12,7 @@ namespace BankTask.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(25)]
+        [StringLength(35)]
         public string CLIENT_ACC { get; set; }
 
         public DateTime DATE_BEGIN { get; set; }
@@ -25,10 +25,10 @@ namespace BankTask.Models
 
         public DateTime? AGGREMENT_DATE { get; set; }
 
-        [StringLength(25)]
+        [StringLength(35)]
         public string ACC_N068 { get; set; }
 
-        [StringLength(25)]
+        [StringLength(35)]
         public string ACC_47426 { get; set; }
 
         public bool IS_ACTIVE { get; set; } = true;

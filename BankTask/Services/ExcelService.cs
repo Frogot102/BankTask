@@ -78,21 +78,23 @@ namespace BankTask.Services
                 Filter = "Excel Files|*.xlsx",
                 Title = "Выберите Excel файл"
             };
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (var wb = new XLWorkbook(openFileDialog.FileName))
                 {
                     var ws = wb.Worksheet(1);
-                    var rows = ws.RowsUsed().Skip(1); // Пропускаем заголовок
+                    var rows = ws.RowsUsed().Skip(1); 
 
                     foreach (var row in rows)
                     {
+
+                        if (row.Cell(1).IsEmpty() && row.Cell(2).IsEmpty()) continue;
+
                         var client = new Client
                         {
                             CLIENT_ACC = row.Cell(2).GetValue<string>(),
                             DATE_BEGIN = row.Cell(3).GetValue<DateTime>(),
-                            DATE_END = row.Cell(4).IsEmpty() ? (DateTime?)null : row.Cell(4).GetValue<DateTime>(), 
+                            DATE_END = row.Cell(4).IsEmpty() ? (DateTime?)null : row.Cell(4).GetValue<DateTime>(),
                             IKUSNUM = row.Cell(5).GetValue<int>(),
                             AGGREMENT_NUM = row.Cell(6).GetValue<string>(),
                             AGGREMENT_DATE = row.Cell(7).IsEmpty() ? (DateTime?)null : row.Cell(7).GetValue<DateTime>(),
@@ -108,12 +110,10 @@ namespace BankTask.Services
                             CLIENT_ACC_DOP = row.Cell(17).GetValue<string>()
                         };
 
-
+                        Data.DbAccess.AddClient(client);
                     }
-
-
-
                 }
+                MessageBox.Show("Клиенты успешно импортированы из Excel.");
             }
         }
     }

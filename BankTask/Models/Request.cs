@@ -12,7 +12,7 @@ namespace BankTask.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(35)]
         public string CLIENT_ACC { get; set; }
 
         public DateTime CREATE_DATE { get; set; }

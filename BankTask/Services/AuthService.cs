@@ -7,11 +7,14 @@ namespace BankTask.Services
         private static readonly Dictionary<string, string> Users = new Dictionary<string, string>
         {
             { "admin", "adminpass" },
-            { "user", "userpass" }
+            { "user", "userpass" },
+            { "user2", "user2pass" },
+            { "user3" , "user3pass" },
+            { "user4" , "user4pass" }
         };
 
-        private static string _currentUser;
-        private static string _currentRole;
+        private static string _currentUser = string.Empty;
+        private static string _currentRole = string.Empty;
 
         public static bool Login(string username, string password)
         {

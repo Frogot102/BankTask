@@ -1,12 +1,11 @@
-﻿using DocumentFormat.OpenXml.Drawing;
+﻿using System.Windows.Forms;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2010.Excel;
-
 namespace BankTask
 {
     partial class MainForm
     {
         private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -15,7 +14,6 @@ namespace BankTask
             }
             base.Dispose(disposing);
         }
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
@@ -167,17 +165,13 @@ namespace BankTask
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClients)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).EndInit();
             this.ResumeLayout(false);
-
         }
-
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -193,5 +187,11 @@ namespace BankTask
         private System.Windows.Forms.Button btnAddRequest;
         private System.Windows.Forms.Button btnEditRequest;
         private System.Windows.Forms.Button btnDeleteRequest;
+
+        // --- Элементы для фильтрации ---
+        private Label lblClientDateFrom, lblClientDateTo, lblRequestDateFrom, lblRequestDateTo;
+        private DateTimePicker dtpClientDateFrom, dtpClientDateTo, dtpRequestDateFrom, dtpRequestDateTo;
+        private Button btnFilterClients, btnClearClientFilter, btnFilterRequests, btnClearRequestFilter;
+        // --- Конец элементов для фильтрации ---
     }
 }

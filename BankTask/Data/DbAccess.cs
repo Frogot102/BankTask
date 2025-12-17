@@ -9,19 +9,49 @@ namespace BankTask.Data
     {
         private const string ConnectionString = "Host=localhost;Port=5432;Database=BankTaskDb;Username=postgres;Password=123";
 
-        public static List<Client> GetClients()
+        // =============== КЛИЕНТЫ ===============
+
+        public static List<Client> GetClients() => GetClientsInternal(null, null, null);
+        public static List<Client> GetClientsByUser(string username) => GetClientsInternal(username, null, null);
+        public static List<Client> GetClientsByDate(DateTime? dateFrom, DateTime? dateTo) => GetClientsInternal(null, dateFrom, dateTo);
+        public static List<Client> GetClientsByUserAndDate(string username, DateTime? dateFrom, DateTime? dateTo) => GetClientsInternal(username, dateFrom, dateTo);
+
+        private static List<Client> GetClientsInternal(string username = null, DateTime? dateFrom = null, DateTime? dateTo = null)
         {
             var clients = new List<Client>();
             using var conn = new NpgsqlConnection(ConnectionString);
             conn.Open();
-            using var cmd = new NpgsqlCommand(@"
-        SELECT ""ID"", ""CLIENT_ACC"", ""DATE_BEGIN"", ""DATE_END"", ""IKUSNUM"",
-               ""AGGREMENT_NUM"", ""AGGREMENT_DATE"", ""ACC_N068"", ""ACC_47426"",
-               ""IS_ACTIVE"", ""CREATE_USER"", ""CREATE_DATE"", ""UPDATE_USER"",
-               ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"", ""CLIENT_ACC_DOP""
-        FROM ""AVERS_DWH_NSO_CLIENT""", conn);
+            var sql = @"
+                SELECT ""ID"", ""CLIENT_ACC"", ""DATE_BEGIN"", ""DATE_END"", ""IKUSNUM"",
+                       ""AGGREMENT_NUM"", ""AGGREMENT_DATE"", ""ACC_N068"", ""ACC_47426"",
+                       ""IS_ACTIVE"", ""CREATE_USER"", ""CREATE_DATE"", ""UPDATE_USER"",
+                       ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"", ""CLIENT_ACC_DOP""
+                FROM ""AVERS_DWH_NSO_CLIENT""
+                WHERE 1=1";
+
+            if (!string.IsNullOrEmpty(username))
+                sql += " AND \"CREATE_USER\" = @Username";
+            if (dateFrom.HasValue)
+                sql += " AND \"CREATE_DATE\" >= @DateFrom";
+            if (dateTo.HasValue)
+                sql += " AND \"CREATE_DATE\" <= @DateTo";
+
+            using var cmd = new NpgsqlCommand(sql, conn);
+            if (!string.IsNullOrEmpty(username))
+                cmd.Parameters.AddWithValue("Username", username);
+            if (dateFrom.HasValue)
+                cmd.Parameters.AddWithValue("DateFrom", dateFrom.Value.Date);
+            if (dateTo.HasValue)
+                // Включаем весь день: до 23:59:59.9999999
+                cmd.Parameters.AddWithValue("DateTo", dateTo.Value.Date.AddDays(1).AddTicks(-1));
+
             using var reader = cmd.ExecuteReader();
-  
+            ReadClients(reader, clients);
+            return clients;
+        }
+
+        private static void ReadClients(NpgsqlDataReader reader, List<Client> clients)
+        {
             int idIndex = reader.GetOrdinal("ID");
             int clientAccIndex = reader.GetOrdinal("CLIENT_ACC");
             int dateBeginIndex = reader.GetOrdinal("DATE_BEGIN");
@@ -39,7 +69,6 @@ namespace BankTask.Data
             int noteIndex = reader.GetOrdinal("NOTE");
             int errMessageIndex = reader.GetOrdinal("ERR_MESSAGE");
             int clientAccDopIndex = reader.GetOrdinal("CLIENT_ACC_DOP");
-
             while (reader.Read())
             {
                 clients.Add(new Client
@@ -63,9 +92,8 @@ namespace BankTask.Data
                     CLIENT_ACC_DOP = reader.IsDBNull(clientAccDopIndex) ? null : reader.GetString(clientAccDopIndex)
                 });
             }
-            return clients;
         }
-        // Добавить клиента
+
         public static void AddClient(Client client)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -79,7 +107,6 @@ namespace BankTask.Data
                 @AGGREMENT_DATE, @ACC_N068, @ACC_47426, @IS_ACTIVE, @CREATE_USER,
                 @CREATE_DATE, @UPDATE_USER, @UPDATE_DATE, @NOTE, @ERR_MESSAGE, @CLIENT_ACC_DOP)",
                 conn);
-
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC;
             cmd.Parameters.Add("@DATE_BEGIN", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_BEGIN;
             cmd.Parameters.Add("@DATE_END", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_END ?? (object)DBNull.Value;
@@ -96,11 +123,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@CLIENT_ACC_DOP", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC_DOP ?? (object)DBNull.Value;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Обновить клиента
         public static void UpdateClient(Client client)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -124,7 +149,6 @@ namespace BankTask.Data
             ""ERR_MESSAGE"" = @ERR_MESSAGE,
             ""CLIENT_ACC_DOP"" = @CLIENT_ACC_DOP
         WHERE ""ID"" = @ID", conn);
-
             cmd.Parameters.Add("@ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = client.ID;
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC;
             cmd.Parameters.Add("@DATE_BEGIN", NpgsqlTypes.NpgsqlDbType.Date).Value = client.DATE_BEGIN;
@@ -142,10 +166,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@CLIENT_ACC_DOP", NpgsqlTypes.NpgsqlDbType.Varchar).Value = client.CLIENT_ACC_DOP ?? (object)DBNull.Value;
-
             cmd.ExecuteNonQuery();
         }
-        // Удалить клиента
+
         public static void DeleteClient(int id)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -154,21 +177,50 @@ namespace BankTask.Data
             cmd.Parameters.AddWithValue("ID", id);
             cmd.ExecuteNonQuery();
         }
-        // Получить все заявки
-        public static List<Request> GetRequests()
+
+        // =============== ЗАЯВКИ ===============
+
+        public static List<Request> GetRequests() => GetRequestsInternal(null, null, null);
+        public static List<Request> GetRequestsByUser(string username) => GetRequestsInternal(username, null, null);
+        public static List<Request> GetRequestsByDate(DateTime? dateFrom, DateTime? dateTo) => GetRequestsInternal(null, dateFrom, dateTo);
+        public static List<Request> GetRequestsByUserAndDate(string username, DateTime? dateFrom, DateTime? dateTo) => GetRequestsInternal(username, dateFrom, dateTo);
+
+        private static List<Request> GetRequestsInternal(string username = null, DateTime? dateFrom = null, DateTime? dateTo = null)
         {
             var requests = new List<Request>();
             using var conn = new NpgsqlConnection(ConnectionString);
             conn.Open();
-            using var cmd = new NpgsqlCommand(@"
-        SELECT ""ID"", ""CLIENT_ACC"", ""CREATE_DATE"", ""SUMM"", ""ADDAGGREMENT_NUM"",
-               ""PRC_STR"", ""DATE_BEGIN"", ""DATE_END"", ""DAYS_COUNT"", ""PRC_JS_CALC"",
-               ""PRC_NUM"", ""DATE_BREAK"", ""IS_ENDED"", ""ADDAGGREMENT_DATE"", ""IKUSNUM"",
-               ""CREATE_USER"", ""UPDATE_USER"", ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"",
-               ""NSO_CLIENT_ID""
-        FROM ""AVERS_DWH_NSO_REQUESTS""", conn);
-            using var reader = cmd.ExecuteReader();
+            var sql = @"
+                SELECT ""ID"", ""CLIENT_ACC"", ""CREATE_DATE"", ""SUMM"", ""ADDAGGREMENT_NUM"",
+                       ""PRC_STR"", ""DATE_BEGIN"", ""DATE_END"", ""DAYS_COUNT"", ""PRC_JS_CALC"",
+                       ""PRC_NUM"", ""DATE_BREAK"", ""IS_ENDED"", ""ADDAGGREMENT_DATE"", ""IKUSNUM"",
+                       ""CREATE_USER"", ""UPDATE_USER"", ""UPDATE_DATE"", ""NOTE"", ""ERR_MESSAGE"",
+                       ""NSO_CLIENT_ID""
+                FROM ""AVERS_DWH_NSO_REQUESTS""
+                WHERE 1=1";
 
+            if (!string.IsNullOrEmpty(username))
+                sql += " AND \"CREATE_USER\" = @Username";
+            if (dateFrom.HasValue)
+                sql += " AND \"CREATE_DATE\" >= @DateFrom";
+            if (dateTo.HasValue)
+                sql += " AND \"CREATE_DATE\" <= @DateTo";
+
+            using var cmd = new NpgsqlCommand(sql, conn);
+            if (!string.IsNullOrEmpty(username))
+                cmd.Parameters.AddWithValue("Username", username);
+            if (dateFrom.HasValue)
+                cmd.Parameters.AddWithValue("DateFrom", dateFrom.Value.Date);
+            if (dateTo.HasValue)
+                cmd.Parameters.AddWithValue("DateTo", dateTo.Value.Date.AddDays(1).AddTicks(-1));
+
+            using var reader = cmd.ExecuteReader();
+            ReadRequests(reader, requests);
+            return requests;
+        }
+
+        private static void ReadRequests(NpgsqlDataReader reader, List<Request> requests)
+        {
             int idIndex = reader.GetOrdinal("ID");
             int clientAccIndex = reader.GetOrdinal("CLIENT_ACC");
             int createDateIndex = reader.GetOrdinal("CREATE_DATE");
@@ -190,7 +242,6 @@ namespace BankTask.Data
             int noteIndex = reader.GetOrdinal("NOTE");
             int errMessageIndex = reader.GetOrdinal("ERR_MESSAGE");
             int nsoClientIdIndex = reader.GetOrdinal("NSO_CLIENT_ID");
-
             while (reader.Read())
             {
                 requests.Add(new Request
@@ -218,10 +269,7 @@ namespace BankTask.Data
                     NSO_CLIENT_ID = reader.GetInt32(nsoClientIdIndex)
                 });
             }
-            return requests;
         }
-
-        // Добавить заявку
 
         public static void AddRequest(Request request)
         {
@@ -239,7 +287,6 @@ namespace BankTask.Data
                 @DATE_BREAK, @IS_ENDED, @ADDAGGREMENT_DATE, @IKUSNUM,
                 @CREATE_USER, @UPDATE_USER, @UPDATE_DATE, @NOTE, @ERR_MESSAGE,
                 @NSO_CLIENT_ID)", conn);
-
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.CLIENT_ACC;
             cmd.Parameters.Add("@CREATE_DATE", NpgsqlTypes.NpgsqlDbType.Timestamp).Value = request.CREATE_DATE;
             cmd.Parameters.Add("@SUMM", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.SUMM ?? (object)DBNull.Value;
@@ -260,11 +307,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@NSO_CLIENT_ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.NSO_CLIENT_ID;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Обновить заявку
         public static void UpdateRequest(Request request)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
@@ -292,7 +337,6 @@ namespace BankTask.Data
             ""ERR_MESSAGE"" = @ERR_MESSAGE,
             ""NSO_CLIENT_ID"" = @NSO_CLIENT_ID
         WHERE ""ID"" = @ID", conn);
-
             cmd.Parameters.Add("@ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.ID;
             cmd.Parameters.Add("@CLIENT_ACC", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.CLIENT_ACC;
             cmd.Parameters.Add("@CREATE_DATE", NpgsqlTypes.NpgsqlDbType.Timestamp).Value = request.CREATE_DATE;
@@ -314,11 +358,9 @@ namespace BankTask.Data
             cmd.Parameters.Add("@NOTE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.NOTE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@ERR_MESSAGE", NpgsqlTypes.NpgsqlDbType.Varchar).Value = request.ERR_MESSAGE ?? (object)DBNull.Value;
             cmd.Parameters.Add("@NSO_CLIENT_ID", NpgsqlTypes.NpgsqlDbType.Integer).Value = request.NSO_CLIENT_ID;
-
             cmd.ExecuteNonQuery();
         }
 
-        // Удалить заявку
         public static void DeleteRequest(int id)
         {
             using var conn = new NpgsqlConnection(ConnectionString);
