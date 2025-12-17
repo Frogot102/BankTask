@@ -128,6 +128,15 @@
   <data name="btnDeleteClient.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
+  <data name="&gt;&gt;dtpRequestDateFrom.Name" xml:space="preserve">
+    <value>dtpRequestDateFrom</value>
+  </data>
+  <data name="&gt;&gt;btnClearRequestFilter.Name" xml:space="preserve">
+    <value>btnClearRequestFilter</value>
+  </data>
+  <data name="&gt;&gt;btnFilterClients.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="btnAddRequest.Text" xml:space="preserve">
     <value>Добавить</value>
   </data>
@@ -137,15 +146,24 @@
   <data name="&gt;&gt;btnDeleteRequest.Parent" xml:space="preserve">
     <value>tabPage2</value>
   </data>
+  <data name="&gt;&gt;dtpClientDateTo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="&gt;&gt;btnEditRequest.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblClientDateFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnExit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;lblRequestDateFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;btnDeleteRequest.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>6</value>
   </data>
   <data name="btnDeleteRequest.Location" type="System.Drawing.Point, System.Drawing">
     <value>480, 418</value>
@@ -153,14 +171,35 @@
   <data name="btnEditRequest.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;lblClientDateFrom.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;dtpClientDateTo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblRequestDateTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
   <data name="btnExportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="dgvRequests.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>51</value>
+  <data name="&gt;&gt;btnExportExcel.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;lblRequestDateFrom.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnClearClientFilter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 438</value>
+  </data>
+  <data name="&gt;&gt;btnAddClient.ZOrder" xml:space="preserve">
+    <value>12</value>
   </data>
   <data name="&gt;&gt;dgvClients.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;lblRequestDateTo.Name" xml:space="preserve">
+    <value>lblRequestDateTo</value>
   </data>
   <data name="btnAddRequest.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
@@ -174,17 +213,23 @@
   <data name="btnExportExcel.Text" xml:space="preserve">
     <value>Экспорт</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 16</value>
+  <data name="&gt;&gt;btnClearClientFilter.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="btnClearClientFilter.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="tabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
+  <data name="dtpClientDateTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
+  </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;btnPrint.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="dtpClientDateFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 436</value>
   </data>
   <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -192,11 +237,20 @@
   <data name="tabPage2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="&gt;&gt;btnDeleteClient.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;dtpClientDateFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnClearRequestFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="lblRequestDateFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;btnExit.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="dtpClientDateFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
   <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
     <value>tabPage1</value>
@@ -204,11 +258,20 @@
   <data name="&gt;&gt;btnPrint.Name" xml:space="preserve">
     <value>btnPrint</value>
   </data>
+  <data name="&gt;&gt;dtpClientDateTo.Name" xml:space="preserve">
+    <value>dtpClientDateTo</value>
+  </data>
+  <data name="&gt;&gt;btnClearClientFilter.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;btnEditClient.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>11</value>
   </data>
   <data name="btnEditRequest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="dtpClientDateTo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="btnPrint.Text" xml:space="preserve">
     <value>Печать</value>
@@ -237,8 +300,14 @@
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="btnFilterRequests.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="tabPage1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="dtpClientDateFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;btnImportExcel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -249,14 +318,20 @@
   <data name="btnAddClient.Location" type="System.Drawing.Point, System.Drawing">
     <value>267, 418</value>
   </data>
+  <data name="&gt;&gt;dtpRequestDateFrom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
     <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;btnFilterRequests.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="dgvClients.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="btnEditClient.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 28</value>
+  <data name="&gt;&gt;btnFilterRequests.Name" xml:space="preserve">
+    <value>btnFilterRequests</value>
   </data>
   <data name="dgvClients.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>51</value>
@@ -264,8 +339,8 @@
   <data name="tabControl1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="&gt;&gt;dgvRequests.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btnFilterRequests.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="&gt;&gt;btnEditRequest.Parent" xml:space="preserve">
     <value>tabPage2</value>
@@ -273,8 +348,14 @@
   <data name="&gt;&gt;btnAddClient.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;dtpClientDateFrom.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnClearRequestFilter.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;tabPage1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -288,14 +369,17 @@
   <data name="btnAddClient.Text" xml:space="preserve">
     <value>Добавить</value>
   </data>
-  <data name="btnPrint.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;btnClearRequestFilter.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblClientDateFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
   </data>
   <data name="&gt;&gt;btnPrint.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnEditClient.Name" xml:space="preserve">
-    <value>btnEditClient</value>
+  <data name="dtpRequestDateFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="btnEditRequest.Location" type="System.Drawing.Point, System.Drawing">
     <value>373, 418</value>
@@ -312,17 +396,41 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Банковская система - Клиенты и заявки</value>
   </data>
+  <data name="&gt;&gt;lblRequestDateFrom.Name" xml:space="preserve">
+    <value>lblRequestDateFrom</value>
+  </data>
+  <data name="&gt;&gt;btnFilterClients.Name" xml:space="preserve">
+    <value>btnFilterClients</value>
+  </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="btnPrint.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+  <data name="lblClientDateTo.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;btnDeleteRequest.Name" xml:space="preserve">
-    <value>btnDeleteRequest</value>
+  <data name="lblRequestDateFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="btnFilterClients.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblClientDateFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="dtpRequestDateTo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblClientDateTo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
   </data>
   <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
     <value>tabControl1</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1059, 463</value>
   </data>
   <data name="btnDeleteRequest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -330,23 +438,50 @@
   <data name="&gt;&gt;btnEditClient.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dtpRequestDateFrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="dtpRequestDateFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
+  </data>
+  <data name="&gt;&gt;dtpClientDateFrom.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
   <data name="btnDeleteRequest.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 28</value>
+  <data name="dgvRequests.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1040, 394</value>
   </data>
   <data name="&gt;&gt;dgvRequests.Parent" xml:space="preserve">
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;btnAddRequest.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lblRequestDateTo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblRequestDateTo.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="btnFilterRequests.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;dtpClientDateFrom.Name" xml:space="preserve">
+    <value>dtpClientDateFrom</value>
   </data>
   <data name="&gt;&gt;btnPrint.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnFilterClients.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnClearRequestFilter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnEditRequest.Text" xml:space="preserve">
     <value>Редакт</value>
@@ -363,14 +498,38 @@
   <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
     <value>tabPage2</value>
   </data>
+  <data name="btnFilterClients.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnPrint.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnClearRequestFilter.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="btnAddRequest.Location" type="System.Drawing.Point, System.Drawing">
     <value>267, 418</value>
   </data>
   <data name="&gt;&gt;btnEditRequest.Name" xml:space="preserve">
     <value>btnEditRequest</value>
   </data>
+  <data name="&gt;&gt;dtpRequestDateFrom.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="btnFilterClients.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;dtpRequestDateTo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="btnEditClient.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblClientDateTo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dgvRequests.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
   </data>
   <data name="btnExportExcel.Location" type="System.Drawing.Point, System.Drawing">
     <value>693, 418</value>
@@ -378,14 +537,23 @@
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 15</value>
   </data>
+  <data name="&gt;&gt;lblClientDateTo.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
   <data name="btnImportExcel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
   </data>
+  <data name="lblClientDateTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
   <data name="btnImportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnClearRequestFilter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="btnDeleteClient.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -393,23 +561,41 @@
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
   </data>
+  <data name="&gt;&gt;lblRequestDateFrom.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="lblClientDateFrom.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
   <data name="btnExit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1059, 463</value>
+  <data name="&gt;&gt;btnEditClient.Name" xml:space="preserve">
+    <value>btnEditClient</value>
   </data>
-  <data name="dgvRequests.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1040, 394</value>
+  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
     <value>983, 514</value>
+  </data>
+  <data name="&gt;&gt;dtpRequestDateFrom.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteRequest.Name" xml:space="preserve">
+    <value>btnDeleteRequest</value>
   </data>
   <data name="dgvRequests.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="dgvClients.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 7</value>
+  </data>
+  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblClientDateTo.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 25</value>
@@ -420,6 +606,9 @@
   <data name="tabPage1.Text" xml:space="preserve">
     <value>Клиенты</value>
   </data>
+  <data name="&gt;&gt;lblRequestDateTo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="&gt;&gt;btnImportExcel.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
@@ -429,41 +618,62 @@
   <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
     <value>tabControl1</value>
   </data>
+  <data name="&gt;&gt;btnClearClientFilter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEditRequest.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnEditClient.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;lblClientDateFrom.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;dgvClients.Name" xml:space="preserve">
     <value>dgvClients</value>
   </data>
-  <data name="&gt;&gt;btnExportExcel.Parent" xml:space="preserve">
-    <value>tabPage1</value>
+  <data name="btnPrint.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
-  <data name="btnPrint.Location" type="System.Drawing.Point, System.Drawing">
-    <value>800, 418</value>
+  <data name="dtpRequestDateTo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;btnExportExcel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="btnEditClient.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="&gt;&gt;btnExit.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tabPage1</value>
   </data>
   <data name="btnImportExcel.Location" type="System.Drawing.Point, System.Drawing">
     <value>587, 418</value>
   </data>
+  <data name="btnEditClient.Location" type="System.Drawing.Point, System.Drawing">
+    <value>373, 418</value>
+  </data>
   <data name="&gt;&gt;btnAddClient.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
-  <data name="&gt;&gt;btnAddClient.Name" xml:space="preserve">
-    <value>btnAddClient</value>
+  <data name="&gt;&gt;btnPrint.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="btnExit.Text" xml:space="preserve">
     <value>Выход</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtpClientDateTo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 408</value>
   </data>
   <data name="&gt;&gt;dgvClients.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -473,6 +683,9 @@
   </data>
   <data name="&gt;&gt;btnExportExcel.Name" xml:space="preserve">
     <value>btnExportExcel</value>
+  </data>
+  <data name="&gt;&gt;btnFilterRequests.Parent" xml:space="preserve">
+    <value>tabPage2</value>
   </data>
   <data name="dgvClients.Size" type="System.Drawing.Size, System.Drawing">
     <value>1040, 394</value>
@@ -486,6 +699,9 @@
   <data name="&gt;&gt;btnAddRequest.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="btnPrint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>800, 418</value>
+  </data>
   <data name="btnEditRequest.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
   </data>
@@ -498,23 +714,41 @@
   <data name="btnExportExcel.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
   </data>
+  <data name="&gt;&gt;btnClearClientFilter.Name" xml:space="preserve">
+    <value>btnClearClientFilter</value>
+  </data>
   <data name="btnDeleteRequest.Text" xml:space="preserve">
     <value>Удалить</value>
   </data>
   <data name="&gt;&gt;dgvRequests.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>9</value>
   </data>
-  <data name="&gt;&gt;dgvRequests.Name" xml:space="preserve">
-    <value>dgvRequests</value>
+  <data name="&gt;&gt;lblClientDateTo.Name" xml:space="preserve">
+    <value>lblClientDateTo</value>
   </data>
   <data name="&gt;&gt;btnEditClient.Parent" xml:space="preserve">
     <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;dtpClientDateTo.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;dtpRequestDateTo.Name" xml:space="preserve">
+    <value>dtpRequestDateTo</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnClearClientFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="btnPrint.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
   </data>
   <data name="dgvClients.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;dgvRequests.Name" xml:space="preserve">
+    <value>dgvRequests</value>
   </data>
   <data name="btnExportExcel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -525,26 +759,44 @@
   <data name="dgvRequests.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="btnEditClient.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 418</value>
+  <data name="lblRequestDateTo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
+  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
+  </data>
+  <data name="&gt;&gt;dtpRequestDateTo.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;btnAddClient.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;btnAddClient.Name" xml:space="preserve">
+    <value>btnAddClient</value>
+  </data>
+  <data name="&gt;&gt;lblClientDateFrom.Name" xml:space="preserve">
+    <value>lblClientDateFrom</value>
   </data>
   <data name="btnEditClient.Text" xml:space="preserve">
     <value>Редакт</value>
   </data>
-  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;btnFilterClients.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
+  <data name="lblRequestDateTo.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;btnFilterRequests.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnEditRequest.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="lblRequestDateFrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="dtpRequestDateTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
+  </data>
+  <data name="&gt;&gt;btnDeleteClient.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;dtpRequestDateTo.Parent" xml:space="preserve">
+    <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;btnExportExcel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

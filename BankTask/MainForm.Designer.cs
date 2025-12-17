@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2010.Excel;
+
 namespace BankTask
 {
     partial class MainForm
@@ -14,11 +15,20 @@ namespace BankTask
             }
             base.Dispose(disposing);
         }
+
+        #region Windows Form Designer generated code
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnClearClientFilter = new System.Windows.Forms.Button();
+            this.btnFilterClients = new System.Windows.Forms.Button();
+            this.dtpClientDateTo = new System.Windows.Forms.DateTimePicker();
+            this.lblClientDateTo = new System.Windows.Forms.Label();
+            this.dtpClientDateFrom = new System.Windows.Forms.DateTimePicker();
+            this.lblClientDateFrom = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.btnImportExcel = new System.Windows.Forms.Button();
@@ -27,6 +37,12 @@ namespace BankTask
             this.btnAddClient = new System.Windows.Forms.Button();
             this.dgvClients = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnClearRequestFilter = new System.Windows.Forms.Button();
+            this.btnFilterRequests = new System.Windows.Forms.Button();
+            this.dtpRequestDateTo = new System.Windows.Forms.DateTimePicker();
+            this.lblRequestDateTo = new System.Windows.Forms.Label();
+            this.dtpRequestDateFrom = new System.Windows.Forms.DateTimePicker();
+            this.lblRequestDateFrom = new System.Windows.Forms.Label();
             this.btnDeleteRequest = new System.Windows.Forms.Button();
             this.btnEditRequest = new System.Windows.Forms.Button();
             this.btnAddRequest = new System.Windows.Forms.Button();
@@ -51,6 +67,13 @@ namespace BankTask
             // 
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage1.Controls.Add(this.btnExit);
+            this.tabPage1.Controls.Add(this.btnClearClientFilter);
+            this.tabPage1.Controls.Add(this.btnFilterClients);
+            this.tabPage1.Controls.Add(this.dtpClientDateTo);
+            this.tabPage1.Controls.Add(this.lblClientDateTo);
+            this.tabPage1.Controls.Add(this.dtpClientDateFrom);
+            this.tabPage1.Controls.Add(this.lblClientDateFrom);
             this.tabPage1.Controls.Add(this.btnPrint);
             this.tabPage1.Controls.Add(this.btnExportExcel);
             this.tabPage1.Controls.Add(this.btnImportExcel);
@@ -60,6 +83,47 @@ namespace BankTask
             this.tabPage1.Controls.Add(this.dgvClients);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // btnClearClientFilter
+            // 
+            resources.ApplyResources(this.btnClearClientFilter, "btnClearClientFilter");
+            this.btnClearClientFilter.Name = "btnClearClientFilter";
+            this.btnClearClientFilter.UseVisualStyleBackColor = true;
+            this.btnClearClientFilter.Click += new System.EventHandler(this.btnClearClientFilter_Click);
+            // 
+            // btnFilterClients
+            // 
+            resources.ApplyResources(this.btnFilterClients, "btnFilterClients");
+            this.btnFilterClients.Name = "btnFilterClients";
+            this.btnFilterClients.UseVisualStyleBackColor = true;
+            this.btnFilterClients.Click += new System.EventHandler(this.btnFilterClients_Click);
+            // 
+            // dtpClientDateTo
+            // 
+            resources.ApplyResources(this.dtpClientDateTo, "dtpClientDateTo");
+            this.dtpClientDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpClientDateTo.Name = "dtpClientDateTo";
+            this.dtpClientDateTo.ValueChanged += new System.EventHandler(this.dtpClientDateTo_ValueChanged);
+            // 
+            // lblClientDateTo
+            // 
+            resources.ApplyResources(this.lblClientDateTo, "lblClientDateTo");
+            this.lblClientDateTo.Name = "lblClientDateTo";
+            this.lblClientDateTo.Click += new System.EventHandler(this.lblClientDateTo_Click);
+            // 
+            // dtpClientDateFrom
+            // 
+            resources.ApplyResources(this.dtpClientDateFrom, "dtpClientDateFrom");
+            this.dtpClientDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpClientDateFrom.Name = "dtpClientDateFrom";
+            this.dtpClientDateFrom.ValueChanged += new System.EventHandler(this.dtpClientDateFrom_ValueChanged);
+            // 
+            // lblClientDateFrom
+            // 
+            resources.ApplyResources(this.lblClientDateFrom, "lblClientDateFrom");
+            this.lblClientDateFrom.Name = "lblClientDateFrom";
+            this.lblClientDateFrom.Click += new System.EventHandler(this.lblClientDateFrom_Click);
             // 
             // btnPrint
             // 
@@ -115,12 +179,56 @@ namespace BankTask
             // tabPage2
             // 
             resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Controls.Add(this.btnClearRequestFilter);
+            this.tabPage2.Controls.Add(this.btnFilterRequests);
+            this.tabPage2.Controls.Add(this.dtpRequestDateTo);
+            this.tabPage2.Controls.Add(this.lblRequestDateTo);
+            this.tabPage2.Controls.Add(this.dtpRequestDateFrom);
+            this.tabPage2.Controls.Add(this.lblRequestDateFrom);
             this.tabPage2.Controls.Add(this.btnDeleteRequest);
             this.tabPage2.Controls.Add(this.btnEditRequest);
             this.tabPage2.Controls.Add(this.btnAddRequest);
             this.tabPage2.Controls.Add(this.dgvRequests);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnClearRequestFilter
+            // 
+            resources.ApplyResources(this.btnClearRequestFilter, "btnClearRequestFilter");
+            this.btnClearRequestFilter.Name = "btnClearRequestFilter";
+            this.btnClearRequestFilter.UseVisualStyleBackColor = true;
+            this.btnClearRequestFilter.Click += new System.EventHandler(this.btnClearRequestFilter_Click);
+            // 
+            // btnFilterRequests
+            // 
+            resources.ApplyResources(this.btnFilterRequests, "btnFilterRequests");
+            this.btnFilterRequests.Name = "btnFilterRequests";
+            this.btnFilterRequests.UseVisualStyleBackColor = true;
+            this.btnFilterRequests.Click += new System.EventHandler(this.btnFilterRequests_Click);
+            // 
+            // dtpRequestDateTo
+            // 
+            resources.ApplyResources(this.dtpRequestDateTo, "dtpRequestDateTo");
+            this.dtpRequestDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpRequestDateTo.Name = "dtpRequestDateTo";
+            this.dtpRequestDateTo.ValueChanged += new System.EventHandler(this.dtpRequestDateTo_ValueChanged);
+            // 
+            // lblRequestDateTo
+            // 
+            resources.ApplyResources(this.lblRequestDateTo, "lblRequestDateTo");
+            this.lblRequestDateTo.Name = "lblRequestDateTo";
+            // 
+            // dtpRequestDateFrom
+            // 
+            resources.ApplyResources(this.dtpRequestDateFrom, "dtpRequestDateFrom");
+            this.dtpRequestDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpRequestDateFrom.Name = "dtpRequestDateFrom";
+            // 
+            // lblRequestDateFrom
+            // 
+            resources.ApplyResources(this.lblRequestDateFrom, "lblRequestDateFrom");
+            this.lblRequestDateFrom.Name = "lblRequestDateFrom";
             // 
             // btnDeleteRequest
             // 
@@ -162,7 +270,6 @@ namespace BankTask
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.tabControl1.ResumeLayout(false);
@@ -171,7 +278,11 @@ namespace BankTask
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRequests)).EndInit();
             this.ResumeLayout(false);
+
         }
+
+        #endregion
+
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -187,11 +298,17 @@ namespace BankTask
         private System.Windows.Forms.Button btnAddRequest;
         private System.Windows.Forms.Button btnEditRequest;
         private System.Windows.Forms.Button btnDeleteRequest;
-
-        // --- Элементы для фильтрации ---
-        private Label lblClientDateFrom, lblClientDateTo, lblRequestDateFrom, lblRequestDateTo;
-        private DateTimePicker dtpClientDateFrom, dtpClientDateTo, dtpRequestDateFrom, dtpRequestDateTo;
-        private Button btnFilterClients, btnClearClientFilter, btnFilterRequests, btnClearRequestFilter;
-        // --- Конец элементов для фильтрации ---
+        private System.Windows.Forms.Button btnFilterClients;
+        private System.Windows.Forms.Button btnClearClientFilter;
+        private System.Windows.Forms.DateTimePicker dtpClientDateTo;
+        private System.Windows.Forms.Label lblClientDateTo;
+        private System.Windows.Forms.DateTimePicker dtpClientDateFrom;
+        private System.Windows.Forms.Label lblClientDateFrom;
+        private System.Windows.Forms.Button btnFilterRequests;
+        private System.Windows.Forms.Button btnClearRequestFilter;
+        private System.Windows.Forms.DateTimePicker dtpRequestDateTo;
+        private System.Windows.Forms.Label lblRequestDateTo;
+        private System.Windows.Forms.DateTimePicker dtpRequestDateFrom;
+        private System.Windows.Forms.Label lblRequestDateFrom;
     }
 }

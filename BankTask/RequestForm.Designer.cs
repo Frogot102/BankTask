@@ -271,7 +271,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(20, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.Size = new System.Drawing.Size(57, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Клиент:";
             // 
@@ -307,9 +307,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(20, 170);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 16);
+            this.label5.Size = new System.Drawing.Size(67, 16);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Заявка на:";
+            this.label5.Text = "Процент:";
             // 
             // label6
             // 
@@ -539,6 +539,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numNsoClientId)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
